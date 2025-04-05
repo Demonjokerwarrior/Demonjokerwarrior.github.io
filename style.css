@@ -1,0 +1,135 @@
+/* Fullscreen intro video */
+#introVideoContainer {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#introVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Video background */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Main content styling */
+.content {
+  position: relative;
+  z-index: 1;
+  color: #00fff7;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px #0ff;
+}
+
+.text-background {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 90%;
+  box-shadow: 0 0 20px #0ff;
+  backdrop-filter: blur(5px);
+}
+
+h1, h2 {
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 10px #0ff;
+}
+
+.section {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #0ff;
+  padding: 40px;
+  text-align: center;
+}
+
+.side-box {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #00ffff80;
+  width: 45%;
+  margin: 20px 0;
+}
+
+ul {
+  text-align: left;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Social links */
+.social-links a {
+  color: #0ff;
+  margin: 0 10px;
+  font-size: 1.8rem;
+  transition: transform 0.3s;
+}
+.social-links a:hover {
+  color: #fff;
+  transform: scale(1.2);
+}
+
+/* Chat button */
+.chat-button {
+  margin-top: 20px;
+}
+.btn-chat {
+  background-color: #0ff;
+  color: black;
+  padding: 12px 25px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: none;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.btn-chat:hover {
+  background-color: #00cccc;
+}
+/* Hidden by default */
+.content {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Class to show and animate content */
+.content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cyberpunk Login</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    .login-container {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      border-radius: 12px;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 25px #0ff;
+      width: 350px;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: slideUp 1.5s ease-out forwards;
+      animation-delay: 1s;
+      position: relative;
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .neon-glow {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0ff;
+      width: 30%;
+      height: 5px;
+      border-radius: 5px;
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    }
+
+    .login-title {
+      font-size: 24px;
+      color: #0ff;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 0 0 5px #0ff;
+      border-right: 2px solid #0ff;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 2s steps(15, end) forwards;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      background-color: #111;
+      border: 2px solid #0ff;
+      border-radius: 8px;
+      color: #0ff;
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    input::placeholder {
+      color: #0ff9;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    }
+
+    .login-btn:hover {
+      background: #00f8f8;
+      box-shadow: 0 0 30px #0ff;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+      border: 3px solid #0ff;
+      padding: 60px 80px;
+      color: #0f0;
+      font-size: 40px;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      box-shadow: 0 0 50px #0ff;
+      display: none;
+      z-index: 1000;
+      animation: glitch 1s infinite;
+      text-shadow: 2px 0 red, -2px 0 blue;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 red, -2px 0 blue; }
+      20% { text-shadow: -2px 0 green, 2px 0 pink; }
+      40% { text-shadow: 0 0 5px #0ff; }
+      60% { text-shadow: 2px 0 red, -2px 0 blue; }
+      80% { text-shadow: -2px 0 green, 2px 0 pink; }
+      100% { text-shadow: 0 0 5px #0ff; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="neon-glow"></div>
+    <div class="login-title" id="title">CYBER LOGIN</div>
+    <input type="text" placeholder="Username" id="username" />
+    <input type="password" placeholder="Password" id="password" />
+    <button class="login-btn" onclick="login()">ENTER</button>
+  </div>
+
+  <div class="popup" id="popup">🔓 ACCESS GRANTED</div>
+
+  <script>
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const popup = document.getElementById("popup");
+
+      if (user === "admin" && pass === "cyberpunk") {
+        popup.innerText = "🔓 ACCESS GRANTED";
+        popup.style.display = "block";
+
+        setTimeout(() => {
+          popup.innerText = "👾 WELCOME TO THE MAINFRAME...";
+        }, 2000);
+
+        setTimeout(() => {
+          window.location.href = "https://demonjokerwarrior.github.io/main.html";
+        }, 4000);
+
+      } else {
+        alert("❌ ACCESS DENIED");
+      }
+    }
+  </script>
+
+</body>
+</html>
