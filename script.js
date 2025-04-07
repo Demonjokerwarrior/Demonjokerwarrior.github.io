@@ -5,7 +5,7 @@ window.addEventListener("load", () => {
     if (intro) {
       intro.style.display = "none";
     }
-  }, 7000);
+  }, 5000);
 
   // Show the content with slide-up animation after 8 seconds
   setTimeout(() => {
