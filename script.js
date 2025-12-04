@@ -1,17 +1,26 @@
-// Hide the intro video after 7 seconds
+// Hide Intro Video After 5 Seconds
 window.addEventListener("load", () => {
   setTimeout(() => {
     const intro = document.getElementById("introVideoContainer");
-    if (intro) {
-      intro.style.display = "none";
-    }
+    if (intro) intro.style.display = "none";
   }, 5000);
 
-  // Show the content with slide-up animation after 8 seconds
+  // Reveal Content
   setTimeout(() => {
-    const content = document.querySelector(".content");
-    if (content) {
-      content.classList.add("show");
-    }
-  }, 8000);
+    document.querySelector(".hero-box").style.opacity = "1";
+  }, 5500);
+
+  // Scroll Reveal Animation
+  const sections = document.querySelectorAll(".fade-up");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(section => observer.observe(section));
 });

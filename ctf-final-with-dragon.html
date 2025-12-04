@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Demon Warrior — CTF with Dragon Watermark</title>
+
+  <!-- Fonts & jsPDF -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#030306; --neon:#00fff7; --muted:#7fdfe7; --accent:#ff00c8; --panel:rgba(0,0,0,0.64);
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#000 0%, #050507 85%);color:var(--neon);font-family:'Share Tech Mono',monospace}
+    .wrap{max-width:1100px;margin:28px auto;padding:22px}
+    h1{font-family:'Orbitron',sans-serif;text-align:center;margin-bottom:6px;letter-spacing:2px}
+    .panel{background:var(--panel);border-radius:12px;padding:18px;box-shadow:0 8px 40px rgba(0,255,247,0.04);border:1px solid rgba(0,255,247,0.04)}
+    #term{height:360px;overflow:auto;padding:16px;background:#000;border-radius:10px;border:1px solid rgba(0,255,247,0.06);box-shadow:inset 0 0 30px rgba(0,255,247,0.02);color:#bfffe6}
+    .line{margin:6px 0;white-space:pre-wrap;word-break:break-word}
+    .muted{color:var(--muted)}
+    .info{color:var(--muted)}
+    .success{color:#9bffb8}
+    .error{color:#ff9b9b}
+    .prompt{color:var(--accent);display:inline-block;margin-right:8px;font-weight:700}
+    .cmdline{display:flex;gap:10px;margin-top:12px;align-items:center}
+    .cmdinput{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.01);color:var(--neon);outline:none;font-family:inherit}
+    .btn{background:var(--neon);color:#000;padding:9px 13px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .note{font-size:13px;color:var(--muted);margin-top:10px}
+    code{background:rgba(255,255,255,0.02);padding:2px 6px;border-radius:4px;color:#bff}
+    .progress-wrap{margin-top:12px;display:none}
+    .progress-bar{width:0%;height:14px;background:linear-gradient(90deg,var(--neon),var(--accent));border-radius:8px;box-shadow:0 0 18px rgba(0,255,247,0.12)}
+    .progress-bg{background:rgba(255,255,255,0.03);border-radius:8px;padding:3px;border:1px solid rgba(0,255,247,0.03)}
+    .flag-area{margin-top:14px;display:flex;gap:8px;align-items:center}
+    .flag-input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.01);color:var(--neon);outline:none}
+    .notes-panel{margin-top:18px;padding:14px;border-radius:10px;background:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.45));border:1px solid rgba(0,255,247,0.04)}
+    .notes-panel h3{margin:0 0 8px;color:var(--neon)}
+    .notes-panel ul{margin:0;padding-left:18px;color:var(--muted)}
+    #certWrap{margin-top:22px;display:none;text-align:center}
+    #certCanvas{max-width:100%;border-radius:8px;border:1px solid rgba(0,255,247,0.06);box-shadow:0 8px 30px rgba(0,255,247,0.06)}
+    .cert-buttons{margin-top:10px;display:flex;gap:10px;justify-content:center}
+    .small{font-size:13px;color:var(--muted);margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>DEMON WARRIOR — Polished CTF</h1>
+
+    <div class="panel" role="region" aria-label="CTF Terminal Panel">
+      <div id="term" aria-live="polite" tabindex="0"></div>
+
+      <div class="cmdline" aria-label="command input">
+        <span class="prompt" id="promptText">$</span>
+        <input id="cmdInput" class="cmdinput" placeholder="Type a command (help for list)"/>
+        <button id="runBtn" class="btn">Run</button>
+      </div>
+
+      <div class="progress-wrap" id="progressWrap" aria-hidden="true" style="margin-top:12px;">
+        <div class="progress-bg"><div id="progressBar" class="progress-bar"></div></div>
+      </div>
+
+      <div class="flag-area" style="margin-top:10px;">
+        <input id="flagSubmit" class="flag-input" placeholder="Submit flag (MD5)"/>
+        <button id="flagBtn" class="btn">Submit Flag</button>
+      </div>
+
+      <div id="flagMsg" class="small" aria-live="polite"></div>
+
+      <div id="certWrap">
+        <h3 class="muted">Certificate of Completion</h3>
+        <canvas id="certCanvas" width="1000" height="620"></canvas>
+        <div class="cert-buttons">
+          <a id="downloadPNG" class="btn" download="demon_ctf_certificate.png">Download PNG</a>
+          <button id="downloadPDF" class="btn">Download PDF</button>
+        </div>
+      </div>
+
+      <div class="note">
+        Tip: Use <code>help</code>, <code>ls</code>, <code>ls -al</code>, <code>cat &lt;file&gt;</code>, <code>./&lt;file&gt;</code>, <code>su root</code>. Press <code>F2</code> for a hidden hint.
+      </div>
+    </div>
+
+    <!-- Notes section (on page) -->
+    <div class="notes-panel" role="note" aria-label="CTF notes">
+      <h3>Notes & Summary</h3>
+      <ul>
+        <li>[+] SQL Injection discovered in login.sh</li>
+        <li>[+] Privilege escalation through weak su password</li>
+        <li>[+] Access gained to root-level decrypt function</li>
+        <li>[+] Final MD5 extracted successfully</li>
+      </ul>
+    </div>
+
+    <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px;">
+      Place your badge image as <code>badge.png</code> or <code>badge.jpg</code>, and your dragon watermark as <code>dragon.png</code> in the same folder as this HTML file.
+    </p>
+  </div>
+
+<script>
+/* ============== CONFIG ================ */
+const FLAG_MD5 = "5c3885e8ae8ecc87db1feeb9864524de";
+const SQLI_USERNAME = "admin";
+const SQLI_PASSWORD = "' or 1=1; --";
+const ROOT_PASSWORD = "DevilsDemon";
+const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL"; // replace to enable notifications
+const BADGE_PNG = "badge1.png";
+const BADGE_JPG = "badge.jpg";
+const DRAGON_PNG = "dragon.png"; // user-uploaded dragon watermark
+
+/* ============== STATE & DOM =========== */
+let state = "normal"; // normal, login_user, login_pass, level2_unlocked, su_pass
+let isRoot = false;
+const term = document.getElementById("term");
+const input = document.getElementById("cmdInput");
+const runBtn = document.getElementById("runBtn");
+const promptText = document.getElementById("promptText");
+const flagInput = document.getElementById("flagSubmit");
+const flagBtn = document.getElementById("flagBtn");
+const flagMsg = document.getElementById("flagMsg");
+const progressWrap = document.getElementById("progressWrap");
+const progressBar = document.getElementById("progressBar");
+const certWrap = document.getElementById("certWrap");
+const downloadPNG = document.getElementById("downloadPNG");
+const downloadPDF = document.getElementById("downloadPDF");
+
+/* ============== Intro typing ============ */
+const intro = [
+  "Initializing Demon Warrior system...",
+  "Loading static modules: [terminal, badges, certificate, decryptor]...",
+  "Performing integrity checks...",
+  "Status: OK",
+  "Welcome. Type 'help' to begin."
+];
+(function typeLines(lines, i=0) {
+  if (i >= lines.length) return;
+  typeLine(lines[i], () => setTimeout(()=> typeLines(lines, i+1), 300));
+})(intro);
+function typeLine(text, cb) {
+  let idx = 0;
+  const el = document.createElement("div");
+  el.className = "line muted";
+  term.appendChild(el);
+  function step(){
+    if (idx <= text.length) {
+      el.textContent = text.slice(0, idx);
+      term.scrollTop = term.scrollHeight;
+      idx++;
+      setTimeout(step, 18 + Math.random()*30);
+    } else {
+      if (cb) cb();
+    }
+  }
+  step();
+}
+setTimeout(()=> { print("-----------------------------------------------"); print("This is a static CTF demo. Your goal: find the flag and submit its MD5."); }, 2000);
+function print(txt, cls) { const d = document.createElement("div"); d.className = "line " + (cls||""); d.textContent = txt; term.appendChild(d); term.scrollTop = term.scrollHeight; }
+
+/* ============== Files ================ */
+let files = generateRandomFiles();
+function generateRandomFiles() {
+  const pool = ["notes.txt","todo.md","image.png","script.sh","data.log","backup.bak"];
+  const out = [];
+  while (out.length < 4) {
+    const p = pool[Math.floor(Math.random()*pool.length)];
+    if (!out.includes(p)) out.push(p);
+  }
+  return out;
+}
+
+/* ============== Command handling ======= */
+function handleCommand(raw) {
+  const cmd = (raw||"").trim();
+  if (!cmd) return;
+  print("$ " + cmd, "muted");
+
+  if (state === "login_user") {
+    window._pending_user = cmd; state = "login_pass"; print("Password: (type password and press Run)", "muted"); return;
+  }
+  if (state === "login_pass") {
+    const user = window._pending_user || ""; const pass = cmd;
+    if (user === SQLI_USERNAME && pass === SQLI_PASSWORD) {
+      print("[+] SQL Injection successful!", "success");
+      print("[+] Level 2 unlocked. Here's a base64 hint (decode it):", "info");
+      print("cGFzc3dkID0gRGV2aWxzRGVtb24=", "muted"); state = "level2_unlocked";
+    } else { print("[-] Login failed. Returning to normal.", "error"); state = "normal"; }
+    return;
+  }
+  if (state === "su_pass") {
+    const pass = cmd;
+    if (pass === ROOT_PASSWORD) { isRoot = true; state = "normal"; promptText.textContent = "#"; print("[+] Authentication successful. Switched to root.", "success"); ensureRootFiles(); }
+    else { print("Authentication failure.", "error"); state = "normal"; }
+    return;
+  }
+
+  const parts = cmd.split(" ").filter(Boolean);
+  const base = parts[0].toLowerCase();
+  switch(base) {
+    case "help": print("Commands: help, clear, ls, ls -al, cat <file>, ./<file>, su root", "info"); break;
+    case "clear": term.innerHTML = ""; break;
+    case "ls":
+      if (parts.length>1 && parts[1] === "-al") {
+        if (isRoot) { print("-rw-r--r-- 1 root root  1024 Jan  1  2025 readme","muted"); print("-rwxr-xr-x 1 root root  4096 Jan  3  2025 decrypt","muted"); }
+        else { print("-rw-r--r-- 1 user user  1024 Jan  1  2025 README.txt","muted"); print("-rw-r--r-- 1 user user  2048 Jan  2  2025 "+(files[0]||"notes.txt"),"muted"); print("-rw-r--r-- 1 user user  4096 Jan  3  2025 login.sh","muted"); }
+      } else {
+        if (isRoot) print("readme  decrypt","info");
+        else print((files.slice(0,4).join("  ")) || "notes.txt  todo.md  image.png  script.sh","info");
+      } break;
+    case "cat":
+      if (parts.length<2) { print("Usage: cat <file>", "muted"); break; }
+      handleCat(parts.slice(1).join(" ")); break;
+    default:
+      if (base.startsWith("./")) handleRun(base.substring(2));
+      else if (base === "su") { if (parts[1] === "root") { state = "su_pass"; print("Password: (type password and press Run)", "muted"); } else print("Usage: su root","muted"); }
+      else print("Command not found: " + base + " (type 'help')","muted");
+  }
+}
+
+/* ============== cat/run handlers ======= */
+function handleCat(filename) {
+  const f = filename.trim().toLowerCase();
+  if (!f) { print("Usage: cat <file)","muted"); return; }
+  if (f === "readme" || f === "readme.txt") { if (isRoot) print("Run the final decrypt program: ./decrypt","info"); else print("cat: " + filename + ": No such file or directory","error"); return; }
+  if (f === "login.sh") { print("#!/bin/bash","muted"); print("echo \"Use this script to attempt login.\"","muted"); return; }
+  if (["notes.txt","todo.md","image.png","script.sh","data.log","backup.bak"].includes(f)) { print("","muted"); return; }
+  print("cat: " + filename + ": No such file or directory","error");
+}
+function handleRun(fname) {
+  const f = fname.trim().toLowerCase();
+  if (f === "login.sh") { state = "login_user"; print("Running login.sh ...","muted"); print("Username: (type username and press Run)","muted"); return; }
+  if (f === "decrypt" || f === "decript") { if (!isRoot) { print("Permission denied: root required to run ./decrypt","error"); return; } runDecryptSequence(); return; }
+  print("bash: ./" + fname + ": No such file or directory","error");
+}
+
+/* ============== decrypt sequence ============ */
+function runDecryptSequence() {
+  print("Decrypting... please wait","muted");
+  progressWrap.style.display = "block";
+  progressBar.style.width = "0%";
+  animateProgress(progressBar, 0, 100, 4200, ()=> {
+    print("MD5(Flag(Cyber_Demons)) = " + FLAG_MD5, "success");
+    print("This MD5 is the final flag. Submit it in the box below.", "info");
+    flagInput.scrollIntoView({behavior:"smooth"});
+  });
+}
+function animateProgress(el, from, to, duration, cb) {
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min(1,(now-start)/duration);
+    const val = from + (to-from)*t;
+    el.style.width = val + "%";
+    if (t<1) requestAnimationFrame(step);
+    else { if (cb) cb(); setTimeout(()=>{ progressWrap.style.display="none"; el.style.width="0%"; },800); }
+  }
+  requestAnimationFrame(step);
+}
+function ensureRootFiles() { if (!files.includes("readme")) files.push("readme"); if (!files.includes("decrypt")) files.push("decrypt"); }
+
+/* ============== input events ============== */
+runBtn.addEventListener("click", ()=> { const v = input.value; input.value=""; handleCommand(v); input.focus(); });
+input.addEventListener("keydown", (e)=> { if (e.key === "Enter") { runBtn.click(); e.preventDefault(); } });
+document.addEventListener("keydown", (e)=> { if (e.key === "F2") print("Hidden Hint: try 'ls -al' to reveal hidden files.","muted"); });
+
+/* ============== flag submission ============ */
+flagBtn.addEventListener("click", ()=> {
+  const v = flagInput.value.trim();
+  if (!v) { flagMsg.textContent = "Enter the MD5 flag string."; flagMsg.style.color = "#ff9b9b"; return; }
+  if (v === FLAG_MD5) {
+    flagMsg.textContent = "✅ Flag correct! Enter your name to generate a certificate (prompt)."; flagMsg.style.color = "#9bffb8";
+    askForNameAndGenerate();
+  } else { flagMsg.textContent = "❌ Incorrect flag. Try again."; flagMsg.style.color = "#ff9b9b"; }
+});
+
+/* ============== name & certificate ========== */
+function askForNameAndGenerate() {
+  const name = prompt("Enter your name for the certificate:");
+  if (!name) { alert("Name required to generate certificate."); return; }
+  generateCertificate(name);
+  sendDiscordNotification(name);
+}
+
+/* ============== certificate drawing ============ */
+/* fallback embedded dragon SVG (in case dragon.png not provided) */
+const dragonSVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='#ffffff' d='M320 32c-48 0-88 26-112 64-6 10-18 14-29 9-15-6-31-10-48-10-35 0-64 19-80 48-10 18-12 38-3 60 4 9 2 19-6 25-13 10-27 22-40 34-10 9-11 25-2 35 9 10 25 11 35 2 12-11 23-22 34-34 6-6 15-8 23-5 20 9 41 15 62 20 13 3 27 7 40 11 14 4 29 3 42-4 16-8 28-22 36-38 9-19 21-36 36-50 22-20 50-34 80-40 24-5 48-12 72-14 47-3 86 20 112 56 10 14 27 23 45 23 32 1 58 27 58 59 0 10-4 20-11 28-10 11-20 22-29 33-12 15-25 30-40 44-9 8-9 22 1 30 60 50 97 112 97 200 0 35-6 70-19 102-7 17-24 27-42 25-18-2-31-16-34-34-2-11 0-21 6-31 12-20 20-42 20-65 0-63-32-116-83-156-35-26-76-44-118-58-22-7-44-13-66-18-9-2-18-9-20-19-5-30-25-56-53-69-47-21-96-32-147-32z'/></svg>`;
+
+/* draw certificate */
+async function generateCertificate(name) {
+  certWrap.style.display = "block";
+  const canvas = document.getElementById("certCanvas");
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  // background gradient
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,"#050506"); grad.addColorStop(1,"#0b0b0c");
+  ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+
+  // try to load dragon.png first
+  const dragonImg = await loadImage(DRAGON_PNG).catch(()=>null);
+  if (dragonImg) {
+    ctx.save(); ctx.globalAlpha = 0.08;
+    const dw = W*0.9, dh = H*0.9; ctx.drawImage(dragonImg, (W-dw)/2, (H-dh)/2 - 20, dw, dh); ctx.restore();
+  } else {
+    // fallback to embedded SVG watermark
+    const svgImg = new Image();
+    svgImg.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(dragonSVG);
+    await new Promise(res => { svgImg.onload = res; svgImg.onerror = res; });
+    ctx.save(); ctx.globalAlpha = 0.06; const dw = W*0.9, dh = H*0.9; ctx.drawImage(svgImg, (W-dw)/2, (H-dh)/2 - 20, dw, dh); ctx.restore();
+  }
+
+  // neon border
+  ctx.save(); ctx.lineWidth = 8; ctx.strokeStyle = "#00fff7"; roundRectPath(ctx, 24,24, W-48, H-48, 14); ctx.stroke(); ctx.restore();
+
+  // draw badge at top center (badge.png then badge.jpg)
+  const badge = await loadImage(BADGE_PNG).catch(()=>null) || await loadImage(BADGE_JPG).catch(()=>null);
+  const badgeW = 160, badgeH = 160; const bx = (W-badgeW)/2, by = 36;
+  ctx.save();
+  ctx.beginPath(); ctx.arc(bx + badgeW/2, by + badgeH/2, badgeW/2 + 8, 0, Math.PI*2); ctx.fillStyle = "rgba(0,255,247,0.04)"; ctx.fill(); ctx.restore();
+  if (badge) ctx.drawImage(badge, bx, by, badgeW, badgeH); else { ctx.fillStyle="#00fff7"; ctx.font="20px Orbitron"; ctx.fillText("BADGE", bx+28, by + badgeH/2 + 8); }
+
+  // main text
+  ctx.font = "36px Orbitron"; ctx.fillStyle = "#00fff7"; ctx.fillText("CERTIFICATE OF COMPLETION", 120, by + badgeH + 70);
+  ctx.font = "20px Orbitron"; ctx.fillStyle = "#bfffe6"; ctx.fillText("This certifies that", 120, by + badgeH + 110);
+  ctx.font = "48px Orbitron"; ctx.fillStyle = "#00ffb0"; ctx.fillText(name, 120, by + badgeH + 170);
+  ctx.font = "20px Orbitron"; ctx.fillStyle = "#b7ffff"; ctx.fillText("has successfully completed the Demon Warrior Mini CTF", 120, by + badgeH + 220);
+  ctx.font = "18px Orbitron"; ctx.fillStyle = "#b0ffff"; ctx.fillText("Flag (MD5): " + FLAG_MD5, 120, by + badgeH + 260);
+
+  // Completed Steps box (right side)
+ 
+
+  // date & signature
+  const d = new Date();
+  ctx.font = "18px Orbitron"; ctx.fillStyle = "#b0ffff"; ctx.fillText("Date: " + d.toLocaleDateString(), 120, by + badgeH + 320);
+  ctx.font = "22px Orbitron"; ctx.fillStyle = "#ffffff"; ctx.fillText("~ Demon Warrior", 120, by + badgeH + 370);
+
+  // set PNG download
+  downloadPNG.href = canvas.toDataURL("image/png");
+}
+
+/* helper to attempt load image, returns Promise that rejects on error */
+function loadImage(src) {
+  return new Promise((resolve,reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("Image load failed: " + src));
+    img.src = src;
+  });
+}
+function roundRectPath(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+
+/* ============== PDF export ================= */
+downloadPDF.addEventListener("click", async ()=> {
+  const canvas = document.getElementById("certCanvas");
+  const img = canvas.toDataURL("image/png");
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ orientation: "landscape", unit: "px", format: [canvas.width, canvas.height] });
+  pdf.addImage(img, "PNG", 0, 0, canvas.width, canvas.height);
+  pdf.save("demon_ctf_certificate.pdf");
+});
+
+/* ============== Discord notification =========== */
+async function sendDiscordNotification(name){
+  if (!DISCORD_WEBHOOK || DISCORD_WEBHOOK === "YOUR_DISCORD_WEBHOOK_URL") {
+    print("[!] Discord webhook not set; no notification sent.", "muted");
+    return;
+  }
+  const payload = { content: `🏆 Demon CTF Completed\nName: **${name}**\nFlag (MD5): **${FLAG_MD5}**\nStatus: Completed` };
+  try {
+    const resp = await fetch(DISCORD_WEBHOOK, { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(payload) });
+    if (resp.ok) print("[+] Discord notified of completion for " + name, "muted"); else print("[-] Failed to notify Discord (status: " + resp.status + ")", "error");
+  } catch(e) { print("[-] Error sending Discord notification (see console).", "error"); console.error(e); }
+}
+
+/* Expose debug */
+window._ctf = { FLAG_MD5, ROOT_PASSWORD };
+
+/* focus and ux */
+term.addEventListener('click', ()=> input.focus());
+</script>
+</body>
+</html>
