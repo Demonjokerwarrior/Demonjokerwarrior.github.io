@@ -197,36 +197,8 @@
   </div>
 </section>
 
-<section class="section fade-up" id="mini-ctf">
-  <h1 class="glow-title">Mini CTF Challenge</h1>
-
-  <!-- Terminal -->
-  <div class="glass-box" style="max-width:800px; margin:auto;">
-    <div id="ctf_terminal" class="ctf-terminal"></div>
-
-    <div class="term-input">
-      <span class="term-label">Flag:</span>
-      <input id="flagBox" class="flag-input" placeholder="Enter flag here (example: FLAG{xxxx})" />
-      <button class="btn-chat" onclick="checkFlag()">Submit</button>
-    </div>
-
-    <p id="flagStatus" style="margin-top:10px;"></p>
-  </div>
-
-  <!-- NAME INPUT (Hidden at first) -->
-  <div id="nameSection" class="glass-box" style="max-width:600px; margin:20px auto; display:none;">
-    <h3>Congratulations! Enter your name for the certificate:</h3>
-    <input id="certName" class="flag-input" placeholder="Your Name" />
-    <button class="btn-chat" onclick="generateCertificate()">Generate Certificate</button>
-  </div>
-
- 
 
 
-<!-- LIGHTBOX POPUP -->
-<div id="certPopup" class="cert-popup" onclick="closeCert()">
-  <img id="certPopupImg">
-</div>
 
     <!-- ---------- CONTACT: Discord form ---------- -->
     <section class="section fade-up" id="contact">
@@ -260,7 +232,7 @@
     // ----------------------------
     const GITHUB_USERNAME = "Demonjokerwarrior";
     // Replace with your Discord webhook URL. Keep the webhook secret (don't commit to public repos).
-    const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL";
+    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1447538298355716187/vsRL7lrbmIpKyzY8DeXxVHVdrDQoxOLpCFbP_zY9WFObhNf1tcyXduunp_uEa5qOmWCU";
 
     // ----------------------------
     // UTIL: Hide intro video after 5s, reveal hero
