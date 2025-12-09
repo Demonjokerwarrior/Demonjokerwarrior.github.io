@@ -13,6 +13,9 @@
   <meta name="description" content="Balaji G (Demon Warrior) — Cybersecurity Analyst, Ethical Hacker, Full-Stack Developer." />
 </head>
 <body>
+<div id="cyberTrail"></div>
+
+
 
   <!-- ---------- INTRO FULLSCREEN VIDEO ---------- -->
   <div id="introVideoContainer" aria-hidden="true">
@@ -59,7 +62,6 @@
         </p>
       </div>
     </section>
- <a href="ctf-final-with-dragon.html"  class="btn-chat" > ctf (PDF)</a>
     </section>
 
 <section class="section fade-up">
@@ -69,7 +71,7 @@
 
     <!-- Badge 1 -->
     <div class="badge-card">
-      <img src="badge3.png" alt="Badge 1" class="badge-photo">
+      <img src="badge1.png" alt="Badge 1" class="badge-photo">
       <h3>TryHackMe Top Performer</h3>
       <p>Completed advanced training labs with high-ranking achievements.</p>
     </div>
@@ -197,6 +199,15 @@
   </div>
 </section>
 
+<!-- CTF Challenge Card -->
+<section class="section fade-up">
+  <div class="ctf-invite-card">
+    <h2>Wanna Challenge a CTF?</h2>
+    <p>Test your skills in the Demon Warrior Mini-CTF. Are you ready to prove yourself?</p>
+
+    <a href="ctf-final-with-dragon.html" class="btn-ctf">Start CTF Challenge</a>
+  </div>
+</section>
 
 
 
@@ -527,6 +538,46 @@ async function sendToDiscord(name) {
   }
 }
 
+
+
   </script>
+
+<script>
+(function(){
+
+  const trail = document.getElementById("cyberTrail");
+  let lastX = 0, lastY = 0;
+
+  document.addEventListener("pointermove", (e) => {
+
+    // particle distance limiter (spawns only when movement happens)
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist < 6) return;
+
+    lastX = e.clientX;
+    lastY = e.clientY;
+
+    // create a glowing bit
+    const bit = document.createElement("div");
+    bit.className = "cyber-bit";
+    bit.style.left = e.clientX + "px";
+    bit.style.top = e.clientY + "px";
+
+    // add rotation for randomness
+    const rotate = Math.random() * 360;
+    bit.style.transform = `rotate(${rotate}deg)`;
+
+    trail.appendChild(bit);
+
+    // remove element after animation
+    setTimeout(() => bit.remove(), 600);
+  });
+
+})();
+</script>
+
+ 
 </body>
 </html>
