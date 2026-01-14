@@ -1,583 +1,620 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Demon Warrior – Cybersecurity Analyst</title>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demon Warrior – Cybersecurity Analyst</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Balaji G (Demon Warrior) — Cybersecurity Analyst, Ethical Hacker, Full-Stack Developer." />
-</head>
-<body>
-<div id="cyberTrail"></div>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Balaji G (Demon Warrior) — Cybersecurity Analyst, Ethical Hacker, Full-Stack Developer." />
+  </head>
+<style>
+  /* Center aligned extra certificate */
+.thm-extra-cert {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.thm-extra-cert h3 {
+  margin-top: 12px;
+  color: #00fff7;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Optional: make it slightly larger for emphasis */
+.thm-extra-cert .extra-cert {
+  max-width: 340px;
+  border: 2px solid rgba(0, 255, 247, 0.6);
+  box-shadow: 0 0 18px rgba(0, 255, 247, 0.35);
+}
+</style>
+  <body>
+  <div id="cyberTrail"></div>
 
 
 
-  <!-- ---------- INTRO FULLSCREEN VIDEO ---------- -->
-  <div id="introVideoContainer" aria-hidden="true">
-    <video id="introVideo" autoplay muted playsinline>
-      <source src="f.mp4" type="video/mp4" />
-      <!-- fallback text -->
-      Your browser does not support the video tag.
+    <!-- ---------- INTRO FULLSCREEN VIDEO ---------- -->
+    <div id="introVideoContainer" aria-hidden="true">
+      <video id="introVideo" autoplay muted playsinline>
+        <source src="f.mp4" type="video/mp4" />
+        <!-- fallback text -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- ---------- BACKGROUND VIDEO ---------- -->
+    <video autoplay loop muted class="video-background" aria-hidden="true">
+      <source src="filr.mp4" type="video/mp4" />
     </video>
-  </div>
 
-  <!-- ---------- BACKGROUND VIDEO ---------- -->
-  <video autoplay loop muted class="video-background" aria-hidden="true">
-    <source src="filr.mp4" type="video/mp4" />
-  </video>
+    <!-- ---------- HERO / HEADER ---------- -->
+    <header class="hero content" role="banner">
+      <div class="hero-box" role="region" aria-label="Introduction">
+        <img src="121.png" alt="Balaji (Demon Warrior) Profile" class="profile-img" />
 
-  <!-- ---------- HERO / HEADER ---------- -->
-  <header class="hero content" role="banner">
-    <div class="hero-box" role="region" aria-label="Introduction">
-      <img src="121.png" alt="Balaji (Demon Warrior) Profile" class="profile-img" />
+        <h1 class="glow-title glitch" aria-live="polite">DEMON WARRIOR</h1>
+        <p class="subtitle">Balaji G — Cybersecurity Analyst • Pentester • Full-Stack Developer</p>
 
-      <h1 class="glow-title glitch" aria-live="polite">DEMON WARRIOR</h1>
-      <p class="subtitle">Balaji G — Cybersecurity Analyst • Pentester • Full-Stack Developer</p>
-
-      <div class="social-links" role="navigation" aria-label="Social links">
-        <a href="https://www.instagram.com/demon_warrior_121/" target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i><span class="sr-only">Instagram</span></a>
-        <a href="https://github.com/Demonjokerwarrior/" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
-        <a href="https://www.linkedin.com/in/cyber-demon-4313932b7/" target="_blank" rel="noopener"><i class="fab fa-linkedin" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
-      </div>
-
-      <!-- TryHackMe embed (optional) -->
-      <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=3252070" title="TryHackMe badges" class="tryhackme" aria-hidden="true"></iframe>
-    </div>
-  </header>
-
-  <!-- ---------- ABOUT ---------- -->
-  <main>
-    <section class="section fade-up" id="about">
-      <div class="glass-box">
-        <h2>About Me</h2>
-        <p>
-          I am Balaji — also known as Demon Warrior — a Cybersecurity Analyst and Purple-Team Specialist with a strong foundation in ethical hacking,
-          reverse engineering, malware analysis, full-stack development, and DevSecOps. I build tools, run adversary simulations, and help organizations
-          harden their infrastructure.
-        </p>
-      </div>
-    </section>
-    </section>
-
-<section class="section fade-up">
-  <h1 class="glow-title">Badges</h1>
-
-  <div class="badge-grid">
-
-    <!-- Badge 1 -->
-    <div class="badge-card">
-      <img src="owasp.png" alt="Badge 1" class="badge-photo">
-      <h3>TryHackMe Top Performer</h3>
-      <p>Completed advanced training labs with high-ranking achievements.</p>
-    </div>
-
-    <!-- Badge 2 -->
-    <div class="badge-card">
-      <img src="badge3.png" alt="Badge 2" class="badge-photo">
-      <h3>Red Team Specialist</h3>
-      <p>Certified in offensive operations & adversary simulations.</p>
-    </div>
-
-    <!-- Badge 3 -->
-    <div class="badge-card">
-      <img src="ninja.png" alt="Badge 3" class="badge-photo">
-      <h3>cyber ninja</h3>
-      <p>Recognized for excellence in capture-the-flag competitions.</p>
-    </div>
-
-  </div>
-</section>
-
-    <!-- ---------- SKILLS ---------- -->
-    <section class="section fade-up" id="skills">
-      <h1 class="glow-title">Technical Skills</h1>
-
-      <div class="project-grid" aria-label="Skills grid">
-        <div class="project-card" role="article">
-          <h3>Programming</h3>
-          <p>Python, C, C++, Rust, Go, Ruby, Perl, JavaScript, TypeScript, Dart, Bash, PowerShell</p>
+        <div class="social-links" role="navigation" aria-label="Social links">
+          <a href="https://www.instagram.com/demon_warrior_121/" target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i><span class="sr-only">Instagram</span></a>
+          <a href="https://github.com/Demonjokerwarrior/" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
+          <a href="https://www.linkedin.com/in/cyber-demon-4313932b7/" target="_blank" rel="noopener"><i class="fab fa-linkedin" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
         </div>
 
-        <div class="project-card" role="article">
-          <h3>Cybersecurity</h3>
-          <p>Ethical Hacking, PenTesting, Malware Dev, Reverse Engineering, SOC Ops, Incident Response</p>
+        <!-- TryHackMe embed (optional) -->
+        <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=3252070" title="TryHackMe badges" class="tryhackme" aria-hidden="true"></iframe>
+      </div>
+    </header>
+
+    <!-- ---------- ABOUT ---------- -->
+    <main>
+      <section class="section fade-up" id="about">
+        <div class="glass-box">
+          <h2>About Me</h2>
+          <p>
+            I am Balaji — also known as Demon Warrior — a Cybersecurity Analyst and Purple-Team Specialist with a strong foundation in ethical hacking,
+            reverse engineering, malware analysis, full-stack development, and DevSecOps. I build tools, run adversary simulations, and help organizations
+            harden their infrastructure.
+          </p>
+        </div>
+      </section>
+      </section>
+
+  <section class="section fade-up">
+    <h1 class="glow-title">Badges</h1>
+
+    <div class="badge-grid">
+
+      <!-- Badge 1 -->
+      <div class="badge-card">
+        <img src="owasp.png" alt="Badge 1" class="badge-photo">
+        <h3>TryHackMe Top Performer</h3>
+        <p>Completed advanced training labs with high-ranking achievements.</p>
+      </div>
+
+      <!-- Badge 2 -->
+      <div class="badge-card">
+        <img src="badge3.png" alt="Badge 2" class="badge-photo">
+        <h3>Red Team Specialist</h3>
+        <p>Certified in offensive operations & adversary simulations.</p>
+      </div>
+
+      <!-- Badge 3 -->
+      <div class="badge-card">
+        <img src="ninja.png" alt="Badge 3" class="badge-photo">
+        <h3>cyber ninja</h3>
+        <p>Recognized for excellence in capture-the-flag competitions.</p>
+      </div>
+
+    </div>
+  </section>
+
+      <!-- ---------- SKILLS ---------- -->
+      <section class="section fade-up" id="skills">
+        <h1 class="glow-title">Technical Skills</h1>
+
+        <div class="project-grid" aria-label="Skills grid">
+          <div class="project-card" role="article">
+            <h3>Programming</h3>
+            <p>Python, C, C++, Rust, Go, Ruby, Perl, JavaScript, TypeScript, Dart, Bash, PowerShell</p>
+          </div>
+
+          <div class="project-card" role="article">
+            <h3>Cybersecurity</h3>
+            <p>Ethical Hacking, PenTesting, Malware Dev, Reverse Engineering, SOC Ops, Incident Response</p>
+          </div>
+
+          <div class="project-card" role="article">
+            <h3>Networking & Tools</h3>
+            <p>Wireshark, Nmap, Burp Suite, Nessus, Packet Sniffers, Custom Firewall & Scripts</p>
+          </div>
+
+          <div class="project-card" role="article">
+            <h3>DevOps & Cloud</h3>
+            <p>Docker, Kubernetes, CI/CD, DevSecOps Pipelines, Cloud basics</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- EXPERIENCE ---------- -->
+      <section class="section fade-up" id="experience">
+        <h1 class="glow-title">Experience</h1>
+
+        <div class="glass-box">
+          <h2>Head — Ashridse (Developer & Cybersecurity Lead) — 2025–2026</h2>
+          <p>
+            Led development and security efforts; ran red-team operations, developed custom tooling (RATs / reverse shells),
+            performed reverse engineering, managed SOC activities, and integrated DevSecOps pipelines with containerized deployments.
+          </p>
         </div>
 
-        <div class="project-card" role="article">
-          <h3>Networking & Tools</h3>
-          <p>Wireshark, Nmap, Burp Suite, Nessus, Packet Sniffers, Custom Firewall & Scripts</p>
+        <div class="glass-box">
+          <h2>Internship — Networking & Ethical Hacking</h2>
+          <p>
+            Hands-on labs with network setups, scanning, vulnerability assessments, exploit testing, and security monitoring.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- PROJECTS (AUTO FETCH) ---------- -->
+      <section class="section fade-up" id="projects">
+        <h1 class="glow-title glitch">Projects</h1>
+
+        <!-- projectGrid will be populated by JavaScript -->
+        <div id="projectGrid" class="project-grid" aria-live="polite" aria-atomic="false"></div>
+
+        <div style="margin-top:18px;">
+          <small style="opacity:.8;">Projects are fetched from GitHub and show public repositories. If a project has no description, a placeholder is shown.</small>
+        </div>
+      </section>
+
+      <!-- ---------- DOWNLOAD RESUME ---------- -->
+      <section class="section fade-up" id="resume">
+        <h1 class="glow-title">Resume</h1>
+        <!-- Put your resume.pdf in the same directory or update the path -->
+        <a href="resume.pdf" download="Balaji_G_Resume.pdf" class="btn-chat" id="downloadResume">Download My Resume (PDF)</a>
+      </section>
+
+      <!-- ---------- CERTIFICATIONS ---------- -->
+      <section class="section fade-up" id="certifications">
+        <h1 class="glow-title">Certifications & Achievements</h1>
+        <div class="glass-box" role="list">
+          <ul style="list-style:none; padding:0; margin:0;" aria-label="certifications list">
+            <li>✓ Multiple TryHackMe Certifications</li>
+            <li>✓ Certified Red-Team Expert</li>
+            <li>✓ Certified Cybersecurity Teacher (Red Team Village)</li>
+            <li>✓ Pentest & Ethical Hacking Expert</li>
+            <li>✓ Top-10 — Smart India Hackathon</li>
+            <li>✓ Professional Service Director — Rotaract</li>
+          </ul>
+        </div>
+      </section>
+  <section class="section fade-up" id="thm-certificates">
+    <h1 class="glow-title">TryHackMe Certificates</h1>
+
+    <div class="thm-grid">
+
+      <!-- Certificate 1 -->
+      <div class="thm-card">
+        <img src="thm1.png" alt="TryHackMe Certificate 1" class="thm-img" onclick="openCert(this.src)">
+        <h3>Complete Beginner Path</h3>
+      </div>
+
+      <!-- Certificate 2 -->
+      <div class="thm-card">
+        <img src="thm2.png" alt="TryHackMe Certificate 2" class="thm-img" onclick="openCert(this.src)">
+        <h3>Pre Security Path</h3>
+      </div>
+
+      <!-- Certificate 3 -->
+      <div class="thm-card">
+        <img src="thm3.png" alt="TryHackMe Certificate 3" class="thm-img" onclick="openCert(this.src)">
+        <h3>Offensive Pentesting</h3>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- Additional Center Certificate -->
+<div class="thm-extra-cert">
+  <img src="yukthi.png"
+       alt="Additional TryHackMe Certificate"
+       class="thm-img extra-cert"
+       onclick="openCert(this.src)">
+  <h3>Advanced Cyber Defense</h3>
+</div>
+
+
+  <!-- CTF Challenge Card -->
+  <section class="section fade-up">
+    <div class="ctf-invite-card">
+      <h2>Wanna Challenge a CTF?</h2>
+      <p>Test your skills in the Demon Warrior Mini-CTF. Are you ready to prove yourself?</p>
+
+      <a href="ctf-final-with-dragon.html" class="btn-ctf">Start CTF Challenge</a>
+    </div>
+  </section>
+
+
+
+      <!-- ---------- CONTACT: Discord form ---------- -->
+      <section class="section fade-up" id="contact">
+        <h1 class="glow-title">Contact Me</h1>
+
+        <div class="glass-box" role="form" aria-label="Contact form">
+          <form id="discordForm">
+            <input type="text" id="name" class="input-box" placeholder="Your Name" required aria-required="true" />
+            <input type="email" id="email" class="input-box" placeholder="Your Email" required aria-required="true" />
+            <textarea id="message" class="input-box" placeholder="Your message or inquiry" rows="5" required aria-required="true"></textarea>
+            <button type="submit" class="btn-chat">Send to Discord</button>
+          </form>
+
+          <p id="statusMsg" role="status" aria-live="polite" style="margin-top:12px;"></p>
         </div>
 
-        <div class="project-card" role="article">
-          <h3>DevOps & Cloud</h3>
-          <p>Docker, Kubernetes, CI/CD, DevSecOps Pipelines, Cloud basics</p>
-        </div>
-      </div>
-    </section>
+        <p style="margin-top:12px;">Or reach me directly at: <strong>balajipro121@gmail.com</strong> • <strong>76048 44121</strong></p>
+      </section>
+    </main>
 
-    <!-- ---------- EXPERIENCE ---------- -->
-    <section class="section fade-up" id="experience">
-      <h1 class="glow-title">Experience</h1>
-
-      <div class="glass-box">
-        <h2>Head — Ashridse (Developer & Cybersecurity Lead) — 2025–2026</h2>
-        <p>
-          Led development and security efforts; ran red-team operations, developed custom tooling (RATs / reverse shells),
-          performed reverse engineering, managed SOC activities, and integrated DevSecOps pipelines with containerized deployments.
-        </p>
-      </div>
-
-      <div class="glass-box">
-        <h2>Internship — Networking & Ethical Hacking</h2>
-        <p>
-          Hands-on labs with network setups, scanning, vulnerability assessments, exploit testing, and security monitoring.
-        </p>
-      </div>
-    </section>
-
-    <!-- ---------- PROJECTS (AUTO FETCH) ---------- -->
-    <section class="section fade-up" id="projects">
-      <h1 class="glow-title glitch">Projects</h1>
-
-      <!-- projectGrid will be populated by JavaScript -->
-      <div id="projectGrid" class="project-grid" aria-live="polite" aria-atomic="false"></div>
-
-      <div style="margin-top:18px;">
-        <small style="opacity:.8;">Projects are fetched from GitHub and show public repositories. If a project has no description, a placeholder is shown.</small>
-      </div>
-    </section>
-
-    <!-- ---------- DOWNLOAD RESUME ---------- -->
-    <section class="section fade-up" id="resume">
-      <h1 class="glow-title">Resume</h1>
-      <!-- Put your resume.pdf in the same directory or update the path -->
-      <a href="resume.pdf" download="Balaji_G_Resume.pdf" class="btn-chat" id="downloadResume">Download My Resume (PDF)</a>
-    </section>
-
-    <!-- ---------- CERTIFICATIONS ---------- -->
-    <section class="section fade-up" id="certifications">
-      <h1 class="glow-title">Certifications & Achievements</h1>
-      <div class="glass-box" role="list">
-        <ul style="list-style:none; padding:0; margin:0;" aria-label="certifications list">
-          <li>✓ Multiple TryHackMe Certifications</li>
-          <li>✓ Certified Red-Team Expert</li>
-          <li>✓ Certified Cybersecurity Teacher (Red Team Village)</li>
-          <li>✓ Pentest & Ethical Hacking Expert</li>
-          <li>✓ Top-10 — Smart India Hackathon</li>
-          <li>✓ Professional Service Director — Rotaract</li>
-        </ul>
-      </div>
-    </section>
-<section class="section fade-up" id="thm-certificates">
-  <h1 class="glow-title">TryHackMe Certificates</h1>
-
-  <div class="thm-grid">
-
-    <!-- Certificate 1 -->
-    <div class="thm-card">
-      <img src="thm1.png" alt="TryHackMe Certificate 1" class="thm-img" onclick="openCert(this.src)">
-      <h3>Complete Beginner Path</h3>
-    </div>
-
-    <!-- Certificate 2 -->
-    <div class="thm-card">
-      <img src="thm2.png" alt="TryHackMe Certificate 2" class="thm-img" onclick="openCert(this.src)">
-      <h3>Pre Security Path</h3>
-    </div>
-
-    <!-- Certificate 3 -->
-    <div class="thm-card">
-      <img src="thm3.png" alt="TryHackMe Certificate 3" class="thm-img" onclick="openCert(this.src)">
-      <h3>Offensive Pentesting</h3>
-    </div>
-
-  </div>
-</section>
-
-<!-- CTF Challenge Card -->
-<section class="section fade-up">
-  <div class="ctf-invite-card">
-    <h2>Wanna Challenge a CTF?</h2>
-    <p>Test your skills in the Demon Warrior Mini-CTF. Are you ready to prove yourself?</p>
-
-    <a href="ctf-final-with-dragon.html" class="btn-ctf">Start CTF Challenge</a>
-  </div>
-</section>
+    <!-- ---------- FOOTER ---------- -->
+    <footer style="text-align:center; padding:18px; color:#00fff780;">
+      © <span id="year"></span> Balaji G — Demon Warrior • Built with ⚡️ & neon.
+    </footer>
 
 
+    <!-- ---------- SCRIPTS ---------- -->
+    <script>
+      // ----------------------------
+      // CONFIG: set your values here
+      // ----------------------------
+      const GITHUB_USERNAME = "Demonjokerwarrior";
+      // Replace with your Discord webhook URL. Keep the webhook secret (don't commit to public repos).
+      const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1447538298355716187/vsRL7lrbmIpKyzY8DeXxVHVdrDQoxOLpCFbP_zY9WFObhNf1tcyXduunp_uEa5qOmWCU";
 
-    <!-- ---------- CONTACT: Discord form ---------- -->
-    <section class="section fade-up" id="contact">
-      <h1 class="glow-title">Contact Me</h1>
+      // ----------------------------
+      // UTIL: Hide intro video after 5s, reveal hero
+      // ----------------------------
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const intro = document.getElementById("introVideoContainer");
+          if (intro) intro.style.display = "none";
+        }, 5000);
 
-      <div class="glass-box" role="form" aria-label="Contact form">
-        <form id="discordForm">
-          <input type="text" id="name" class="input-box" placeholder="Your Name" required aria-required="true" />
-          <input type="email" id="email" class="input-box" placeholder="Your Email" required aria-required="true" />
-          <textarea id="message" class="input-box" placeholder="Your message or inquiry" rows="5" required aria-required="true"></textarea>
-          <button type="submit" class="btn-chat">Send to Discord</button>
-        </form>
+        // Reveal hero-box
+        setTimeout(() => {
+          const hero = document.querySelector(".hero-box");
+          if (hero) hero.style.opacity = "1";
+        }, 5500);
+      });
 
-        <p id="statusMsg" role="status" aria-live="polite" style="margin-top:12px;"></p>
-      </div>
-
-      <p style="margin-top:12px;">Or reach me directly at: <strong>balajipro121@gmail.com</strong> • <strong>76048 44121</strong></p>
-    </section>
-  </main>
-
-  <!-- ---------- FOOTER ---------- -->
-  <footer style="text-align:center; padding:18px; color:#00fff780;">
-    © <span id="year"></span> Balaji G — Demon Warrior • Built with ⚡️ & neon.
-  </footer>
-
-
-  <!-- ---------- SCRIPTS ---------- -->
-  <script>
-    // ----------------------------
-    // CONFIG: set your values here
-    // ----------------------------
-    const GITHUB_USERNAME = "Demonjokerwarrior";
-    // Replace with your Discord webhook URL. Keep the webhook secret (don't commit to public repos).
-    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1447538298355716187/vsRL7lrbmIpKyzY8DeXxVHVdrDQoxOLpCFbP_zY9WFObhNf1tcyXduunp_uEa5qOmWCU";
-
-    // ----------------------------
-    // UTIL: Hide intro video after 5s, reveal hero
-    // ----------------------------
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        const intro = document.getElementById("introVideoContainer");
-        if (intro) intro.style.display = "none";
-      }, 5000);
-
-      // Reveal hero-box
-      setTimeout(() => {
-        const hero = document.querySelector(".hero-box");
-        if (hero) hero.style.opacity = "1";
-      }, 5500);
-    });
-
-    // ----------------------------
-    // FETCH GITHUB REPOS & RENDER
-    // ----------------------------
-    async function fetchGitHubRepos(username) {
-      try {
-        const resp = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-        if (!resp.ok) {
-          console.error("GitHub API error", resp.status);
+      // ----------------------------
+      // FETCH GITHUB REPOS & RENDER
+      // ----------------------------
+      async function fetchGitHubRepos(username) {
+        try {
+          const resp = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+          if (!resp.ok) {
+            console.error("GitHub API error", resp.status);
+            return [];
+          }
+          const repos = await resp.json();
+          // Filter out forks if you prefer: repos.filter(r => !r.fork)
+          return repos;
+        } catch (err) {
+          console.error("Failed to fetch GitHub repos:", err);
           return [];
         }
-        const repos = await resp.json();
-        // Filter out forks if you prefer: repos.filter(r => !r.fork)
-        return repos;
-      } catch (err) {
-        console.error("Failed to fetch GitHub repos:", err);
-        return [];
-      }
-    }
-
-    function createProjectCard(repo) {
-      const card = document.createElement("a");
-      card.className = "project-card";
-      card.href = repo.html_url;
-      card.target = "_blank";
-      card.rel = "noopener";
-      card.innerHTML = `
-        <h3>${escapeHtml(repo.name)}</h3>
-        <p>${escapeHtml(repo.description || "No description available.")}</p>
-        <div style="margin-top:12px;">
-          <small>★ ${repo.stargazers_count} • Forks: ${repo.forks_count}</small>
-        </div>
-      `;
-      return card;
-    }
-
-    function escapeHtml(text) {
-      if (!text) return "";
-      return text
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    async function loadProjects() {
-      const grid = document.getElementById("projectGrid");
-      grid.innerHTML = '<div style="width:100%; text-align:center; opacity:.7;">Loading projects…</div>';
-
-      const repos = await fetchGitHubRepos(GITHUB_USERNAME);
-      grid.innerHTML = "";
-
-      if (!repos || repos.length === 0) {
-        grid.innerHTML = '<div style="width:100%; text-align:center; opacity:.8;">No public repositories found or failed to fetch.</div>';
-        return;
       }
 
-      // Optionally sort or filter — here we show top 12 by updated date
-      repos.slice(0, 12).forEach(repo => {
-        const card = createProjectCard(repo);
-        grid.appendChild(card);
-      });
-
-      // Add small spacer
-      const spacer = document.createElement("div");
-      spacer.style.width = "100%";
-      spacer.style.height = "1px";
-      grid.appendChild(spacer);
-    }
-
-    // Kick off
-    loadProjects();
-
-    // ----------------------------
-    // DISCORD WEBHOOK FORM
-    // ----------------------------
-    document.getElementById("discordForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-      const status = document.getElementById("statusMsg");
-
-      if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL") {
-        status.innerText = "Discord webhook not configured. Replace DISCORD_WEBHOOK_URL in the HTML.";
-        return;
+      function createProjectCard(repo) {
+        const card = document.createElement("a");
+        card.className = "project-card";
+        card.href = repo.html_url;
+        card.target = "_blank";
+        card.rel = "noopener";
+        card.innerHTML = `
+          <h3>${escapeHtml(repo.name)}</h3>
+          <p>${escapeHtml(repo.description || "No description available.")}</p>
+          <div style="margin-top:12px;">
+            <small>★ ${repo.stargazers_count} • Forks: ${repo.forks_count}</small>
+          </div>
+        `;
+        return card;
       }
 
-      const payload = {
-        // Discord webhook accepts a JSON with 'content', or an embed structure
-        content: `📩 **New message from portfolio website**\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
-      };
+      function escapeHtml(text) {
+        if (!text) return "";
+        return text
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
 
-      try {
-        const resp = await fetch(DISCORD_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+      async function loadProjects() {
+        const grid = document.getElementById("projectGrid");
+        grid.innerHTML = '<div style="width:100%; text-align:center; opacity:.7;">Loading projects…</div>';
+
+        const repos = await fetchGitHubRepos(GITHUB_USERNAME);
+        grid.innerHTML = "";
+
+        if (!repos || repos.length === 0) {
+          grid.innerHTML = '<div style="width:100%; text-align:center; opacity:.8;">No public repositories found or failed to fetch.</div>';
+          return;
+        }
+
+        // Optionally sort or filter — here we show top 12 by updated date
+        repos.slice(0, 12).forEach(repo => {
+          const card = createProjectCard(repo);
+          grid.appendChild(card);
         });
 
-        if (resp.ok) {
-          status.innerText = "Message sent to Discord! Thank you.";
-          document.getElementById("discordForm").reset();
-        } else {
-          console.error("Webhook response", resp.status, await resp.text());
-          status.innerText = "Failed to send message. Check webhook URL or CORS.";
-        }
-      } catch (err) {
-        console.error("Webhook error", err);
-        status.innerText = "Error sending message. See console for details.";
+        // Add small spacer
+        const spacer = document.createElement("div");
+        spacer.style.width = "100%";
+        spacer.style.height = "1px";
+        grid.appendChild(spacer);
       }
-    });
 
-    // ----------------------------
-    // SCROLL REVEAL (IntersectionObserver)
-    // ----------------------------
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
+      // Kick off
+      loadProjects();
+
+      // ----------------------------
+      // DISCORD WEBHOOK FORM
+      // ----------------------------
+      document.getElementById("discordForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+        const status = document.getElementById("statusMsg");
+
+        if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL") {
+          status.innerText = "Discord webhook not configured. Replace DISCORD_WEBHOOK_URL in the HTML.";
+          return;
+        }
+
+        const payload = {
+          // Discord webhook accepts a JSON with 'content', or an embed structure
+          content: `📩 **New message from portfolio website**\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
+        };
+
+        try {
+          const resp = await fetch(DISCORD_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          if (resp.ok) {
+            status.innerText = "Message sent to Discord! Thank you.";
+            document.getElementById("discordForm").reset();
+          } else {
+            console.error("Webhook response", resp.status, await resp.text());
+            status.innerText = "Failed to send message. Check webhook URL or CORS.";
+          }
+        } catch (err) {
+          console.error("Webhook error", err);
+          status.innerText = "Error sending message. See console for details.";
         }
       });
-    }, { threshold: 0.18 });
 
-    document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+      // ----------------------------
+      // SCROLL REVEAL (IntersectionObserver)
+      // ----------------------------
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, { threshold: 0.18 });
 
-    // ----------------------------
-    // 3D PROJECT CARD MOUSE TRACKING
-    // ----------------------------
-    const cardMouseHandler = (e) => {
-      document.querySelectorAll(".project-card").forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        const rx = (-y / rect.height) * 12; // rotateX
-        const ry = (x / rect.width) * 12;  // rotateY
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
-      });
-    };
+      document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
 
-    const resetCardTransforms = () => {
-      document.querySelectorAll(".project-card").forEach(card => {
-        card.style.transform = "";
-      });
-    };
+      // ----------------------------
+      // 3D PROJECT CARD MOUSE TRACKING
+      // ----------------------------
+      const cardMouseHandler = (e) => {
+        document.querySelectorAll(".project-card").forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          const rx = (-y / rect.height) * 12; // rotateX
+          const ry = (x / rect.width) * 12;  // rotateY
+          card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+        });
+      };
 
-    // Attach mousemove to project grid area only (optimize)
-    const gridEl = document.getElementById("projectGrid");
-    if (gridEl) {
-      gridEl.addEventListener("mousemove", cardMouseHandler);
-      gridEl.addEventListener("mouseleave", resetCardTransforms);
+      const resetCardTransforms = () => {
+        document.querySelectorAll(".project-card").forEach(card => {
+          card.style.transform = "";
+        });
+      };
+
+      // Attach mousemove to project grid area only (optimize)
+      const gridEl = document.getElementById("projectGrid");
+      if (gridEl) {
+        gridEl.addEventListener("mousemove", cardMouseHandler);
+        gridEl.addEventListener("mouseleave", resetCardTransforms);
+      }
+
+      // ----------------------------
+      // Footer year
+      // ----------------------------
+      document.getElementById("year").innerText = new Date().getFullYear();
+
+  // TryHackMe Certificate Popup Viewer
+  function openCert(src) {
+    document.getElementById("certPopupImg").src = src;
+    document.getElementById("certPopup").style.display = "flex";
+  }
+
+  function closeCert() {
+    document.getElementById("certPopup").style.display = "none";
+  }
+  // --------------- CONFIG ---------------
+  const CORRECT_FLAG = "FLAG{CYBER_DEMON}";
+  const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL";
+
+  // --------------- TERMINAL PRINT ---------------
+  function printCTF(text) {
+    const term = document.getElementById("ctf_terminal");
+    term.innerHTML += text + "<br>";
+    term.scrollTop = term.scrollHeight;
+  }
+
+  // --------------- INITIAL TERMINAL OUTPUT ---------------
+  printCTF("Welcome to Demon Warrior Mini CTF...");
+  printCTF("Your mission: Retrieve the hidden flag from the terminal.");
+  printCTF("Hint: Type `help` inside the fake terminal.");
+  printCTF("-------------------------------------------");
+  printCTF("Fake Terminal > FLAG is hidden in plain sight... look carefully.");
+
+  // --------------- FLAG CHECK ---------------
+  function checkFlag() {
+    const val = document.getElementById("flagBox").value.trim();
+    const status = document.getElementById("flagStatus");
+
+    if (val === CORRECT_FLAG) {
+      status.innerHTML = "✅ Correct Flag! Proceed below.";
+      status.style.color = "#00ffb0";
+
+      document.getElementById("nameSection").style.display = "block";
+    } else {
+      status.innerHTML = "❌ Incorrect flag. Try again.";
+      status.style.color = "red";
+    }
+  }
+
+  // --------------- CERTIFICATE GENERATOR ---------------
+  function generateCertificate() {
+    const name = document.getElementById("certName").value.trim();
+    if (name === "") {
+      alert("Enter your name first!");
+      return;
     }
 
-    // ----------------------------
-    // Footer year
-    // ----------------------------
-    document.getElementById("year").innerText = new Date().getFullYear();
+    // Canvas cert
+    const canvas = document.getElementById("certCanvas");
+    const ctx = canvas.getContext("2d");
 
-// TryHackMe Certificate Popup Viewer
-function openCert(src) {
-  document.getElementById("certPopupImg").src = src;
-  document.getElementById("certPopup").style.display = "flex";
-}
+    // Background
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-function closeCert() {
-  document.getElementById("certPopup").style.display = "none";
-}
-// --------------- CONFIG ---------------
-const CORRECT_FLAG = "FLAG{CYBER_DEMON}";
-const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL";
+    // Border
+    ctx.strokeStyle = "#00fff7";
+    ctx.lineWidth = 8;
+    ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-// --------------- TERMINAL PRINT ---------------
-function printCTF(text) {
-  const term = document.getElementById("ctf_terminal");
-  term.innerHTML += text + "<br>";
-  term.scrollTop = term.scrollHeight;
-}
+    // Title
+    ctx.font = "40px Orbitron";
+    ctx.fillStyle = "#00fff7";
+    ctx.fillText("CERTIFICATE OF COMPLETION", 120, 100);
 
-// --------------- INITIAL TERMINAL OUTPUT ---------------
-printCTF("Welcome to Demon Warrior Mini CTF...");
-printCTF("Your mission: Retrieve the hidden flag from the terminal.");
-printCTF("Hint: Type `help` inside the fake terminal.");
-printCTF("-------------------------------------------");
-printCTF("Fake Terminal > FLAG is hidden in plain sight... look carefully.");
+    // Name
+    ctx.font = "32px Orbitron";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Awarded To:", 120, 200);
 
-// --------------- FLAG CHECK ---------------
-function checkFlag() {
-  const val = document.getElementById("flagBox").value.trim();
-  const status = document.getElementById("flagStatus");
+    ctx.font = "50px Orbitron";
+    ctx.fillStyle = "#00ffb0";
+    ctx.fillText(name, 120, 270);
 
-  if (val === CORRECT_FLAG) {
-    status.innerHTML = "✅ Correct Flag! Proceed below.";
-    status.style.color = "#00ffb0";
+    // Footer
+    ctx.font = "26px Orbitron";
+    ctx.fillStyle = "#b0ffff";
+    ctx.fillText("For Successfully Completing the Demon CTF", 120, 350);
 
-    document.getElementById("nameSection").style.display = "block";
-  } else {
-    status.innerHTML = "❌ Incorrect flag. Try again.";
-    status.style.color = "red";
-  }
-}
+    ctx.fillText("~ Demon Warrior", 120, 420);
 
-// --------------- CERTIFICATE GENERATOR ---------------
-function generateCertificate() {
-  const name = document.getElementById("certName").value.trim();
-  if (name === "") {
-    alert("Enter your name first!");
-    return;
+    // Show cert section
+    document.getElementById("certContainer").style.display = "block";
+
+    // Set download link
+    const link = document.getElementById("downloadCert");
+    link.href = canvas.toDataURL("image/png");
+
+    // Send name to Discord
+    sendToDiscord(name);
   }
 
-  // Canvas cert
-  const canvas = document.getElementById("certCanvas");
-  const ctx = canvas.getContext("2d");
+  // --------------- DISCORD WEBHOOK ---------------
+  async function sendToDiscord(name) {
+    if (DISCORD_WEBHOOK === "YOUR_DISCORD_WEBHOOK_URL") {
+      console.log("Webhook not set.");
+      return;
+    }
 
-  // Background
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const payload = {
+      content: `🏆 **New CTF Completion**\nName: **${name}**\nStatus: Completed the Mini CTF`
+    };
 
-  // Border
-  ctx.strokeStyle = "#00fff7";
-  ctx.lineWidth = 8;
-  ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
-
-  // Title
-  ctx.font = "40px Orbitron";
-  ctx.fillStyle = "#00fff7";
-  ctx.fillText("CERTIFICATE OF COMPLETION", 120, 100);
-
-  // Name
-  ctx.font = "32px Orbitron";
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText("Awarded To:", 120, 200);
-
-  ctx.font = "50px Orbitron";
-  ctx.fillStyle = "#00ffb0";
-  ctx.fillText(name, 120, 270);
-
-  // Footer
-  ctx.font = "26px Orbitron";
-  ctx.fillStyle = "#b0ffff";
-  ctx.fillText("For Successfully Completing the Demon CTF", 120, 350);
-
-  ctx.fillText("~ Demon Warrior", 120, 420);
-
-  // Show cert section
-  document.getElementById("certContainer").style.display = "block";
-
-  // Set download link
-  const link = document.getElementById("downloadCert");
-  link.href = canvas.toDataURL("image/png");
-
-  // Send name to Discord
-  sendToDiscord(name);
-}
-
-// --------------- DISCORD WEBHOOK ---------------
-async function sendToDiscord(name) {
-  if (DISCORD_WEBHOOK === "YOUR_DISCORD_WEBHOOK_URL") {
-    console.log("Webhook not set.");
-    return;
+    try {
+      await fetch(DISCORD_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      console.error("Discord send failed", e);
+    }
   }
 
-  const payload = {
-    content: `🏆 **New CTF Completion**\nName: **${name}**\nStatus: Completed the Mini CTF`
-  };
 
-  try {
-    await fetch(DISCORD_WEBHOOK, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+
+    </script>
+
+  <script>
+  (function(){
+
+    const trail = document.getElementById("cyberTrail");
+    let lastX = 0, lastY = 0;
+
+    document.addEventListener("pointermove", (e) => {
+
+      // particle distance limiter (spawns only when movement happens)
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 6) return;
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      // create a glowing bit
+      const bit = document.createElement("div");
+      bit.className = "cyber-bit";
+      bit.style.left = e.clientX + "px";
+      bit.style.top = e.clientY + "px";
+
+      // add rotation for randomness
+      const rotate = Math.random() * 360;
+      bit.style.transform = `rotate(${rotate}deg)`;
+
+      trail.appendChild(bit);
+
+      // remove element after animation
+      setTimeout(() => bit.remove(), 600);
     });
-  } catch (e) {
-    console.error("Discord send failed", e);
-  }
-}
 
-
-
+  })();
   </script>
 
-<script>
-(function(){
 
-  const trail = document.getElementById("cyberTrail");
-  let lastX = 0, lastY = 0;
-
-  document.addEventListener("pointermove", (e) => {
-
-    // particle distance limiter (spawns only when movement happens)
-    const dx = e.clientX - lastX;
-    const dy = e.clientY - lastY;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist < 6) return;
-
-    lastX = e.clientX;
-    lastY = e.clientY;
-
-    // create a glowing bit
-    const bit = document.createElement("div");
-    bit.className = "cyber-bit";
-    bit.style.left = e.clientX + "px";
-    bit.style.top = e.clientY + "px";
-
-    // add rotation for randomness
-    const rotate = Math.random() * 360;
-    bit.style.transform = `rotate(${rotate}deg)`;
-
-    trail.appendChild(bit);
-
-    // remove element after animation
-    setTimeout(() => bit.remove(), 600);
-  });
-
-})();
-</script>
-
- 
-</body>
-</html>
+  </body>
+  </html>
