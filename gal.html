@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demon Warrior | Gallery · Blog · Comments</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    :root {
+      --cyan: #00fff7;
+      --cyan-dim: rgba(0,255,247,0.15);
+      --red: #ff2255;
+      --blue: #0a7eff;
+      --green: #00ff41;
+      --bg: #050810;
+      --glass: rgba(5,14,22,0.82);
+      --border: rgba(0,255,247,0.35);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: #d8f5f5;
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    @media (max-width:768px) { body { cursor: auto; } }
+
+    /* CURSOR */
+    #cursor-ring { position:fixed;width:36px;height:36px;border:2px solid var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s;mix-blend-mode:screen; }
+    #cursor-dot  { position:fixed;width:6px;height:6px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:0 0 8px var(--cyan); }
+
+    /* SCANLINES */
+    body::before { content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(0,255,247,0.018) 2px,rgba(0,255,247,0.018) 4px);pointer-events:none;z-index:1000;animation:scanMove 12s linear infinite; }
+    @keyframes scanMove { from{background-position:0 0} to{background-position:0 400px} }
+
+    /* GRID BG */
+    .grid-bg { position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(0,255,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,247,0.04) 1px,transparent 1px);background-size:60px 60px;animation:gridPulse 8s ease-in-out infinite alternate; }
+    @keyframes gridPulse { 0%{opacity:0.4} 100%{opacity:1} }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 500;
+      background: rgba(5,8,16,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,255,247,0.15);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .nav-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem; font-weight: 900;
+      color: var(--cyan);
+      text-shadow: 0 0 10px var(--cyan);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links { display:flex; gap:28px; list-style:none; }
+    .nav-links a {
+      font-size: 0.78rem; color: rgba(0,255,247,0.7);
+      text-decoration: none; letter-spacing: 1.5px;
+      transition: 0.2s; padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+      text-shadow: 0 0 8px var(--cyan);
+    }
+    @media(max-width:600px){ .nav-links { gap:14px; } .nav-links a { font-size:0.68rem; } }
+
+    /* PAGE HEADER */
+    .page-hero {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+    .page-hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.6rem; font-weight: 900;
+      color: #fff; letter-spacing: 4px;
+      text-shadow: 0 0 20px rgba(0,255,247,0.4);
+      animation: glitchTitle 6s infinite;
+    }
+    @keyframes glitchTitle {
+      0%,88%,100%{text-shadow:0 0 20px rgba(0,255,247,0.4);transform:none}
+      91%{text-shadow:-3px 0 #ff0055,3px 0 #00ffff;transform:skewX(-6deg)}
+      93%{text-shadow:3px 0 #ff0055,-3px 0 #00ffff;transform:skewX(4deg)}
+    }
+    .page-hero-sub { color: rgba(0,255,247,0.55); font-size:0.82rem; letter-spacing:2px; margin-top:8px; }
+
+    /* TAB SYSTEM */
+    .tab-bar {
+      display: flex; justify-content: center; gap: 0;
+      margin: 2rem auto 0;
+      max-width: 600px;
+      border: 1px solid rgba(0,255,247,0.2);
+      border-radius: 50px;
+      overflow: hidden;
+      background: rgba(0,10,14,0.6);
+    }
+    .tab-btn {
+      flex: 1; padding: 14px 24px;
+      background: transparent;
+      border: none; color: rgba(0,255,247,0.5);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem; letter-spacing: 2px;
+      cursor: pointer; transition: 0.3s;
+      position: relative;
+    }
+    .tab-btn.active {
+      background: rgba(0,255,247,0.1);
+      color: var(--cyan);
+      text-shadow: 0 0 10px var(--cyan);
+    }
+    .tab-btn:not(:last-child) { border-right: 1px solid rgba(0,255,247,0.15); }
+    .tab-btn:hover:not(.active) { color: rgba(0,255,247,0.8); background: rgba(0,255,247,0.05); }
+
+    /* CONTENT SECTION */
+    .content-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 20px; }
+    .tab-panel { display: none; animation: panelIn 0.5s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes panelIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ══ GALLERY ══ */
+    .gallery-filter {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 2rem;
+    }
+    .filter-btn {
+      padding: 6px 18px; border-radius: 20px;
+      border: 1px solid rgba(0,255,247,0.3);
+      background: transparent; color: rgba(0,255,247,0.6);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 1px;
+      cursor: pointer; transition: 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(0,255,247,0.12);
+      border-color: var(--cyan); color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0,255,247,0.2);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .gallery-item {
+      position: relative; border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(0,255,247,0.2);
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      background: rgba(0,15,20,0.8);
+      aspect-ratio: 4/3;
+    }
+    .gallery-item:hover {
+      transform: scale(1.03) translateY(-4px);
+      border-color: var(--cyan);
+      box-shadow: 0 0 30px rgba(0,255,247,0.3), 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: filter 0.3s;
+      filter: brightness(0.85) saturate(1.2);
+    }
+    .gallery-item:hover img { filter: brightness(1) saturate(1.5); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 60%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 16px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-title { font-family:'Orbitron',monospace; font-size:0.85rem; color:#fff; margin-bottom:4px; }
+    .gallery-cat {
+      font-size: 0.65rem; letter-spacing: 1px;
+      padding: 2px 10px; border-radius: 20px; display: inline-block; width: fit-content;
+    }
+    /* fallback if image missing */
+    .gallery-item img::before {
+      content: "⚠️";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a0a0a;
+      color: var(--red);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* gallery lightbox */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    #lightbox.open { display: flex; animation: panelIn 0.3s ease; }
+    #lightbox img { max-width: 90%; max-height: 75vh; border-radius: 16px; border: 2px solid var(--cyan); box-shadow: 0 0 40px rgba(0,255,247,0.4); }
+    #lightboxClose { position: absolute; top: 20px; right: 24px; background: rgba(255,34,85,0.1); border: 1px solid var(--red); color: var(--red); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; padding: 6px 16px; border-radius: 20px; cursor: pointer; }
+    #lightboxClose:hover { background: rgba(255,34,85,0.25); }
+    #lightboxCaption { font-family: 'Orbitron', monospace; color: var(--cyan); font-size: 0.9rem; letter-spacing: 2px; }
+
+    /* ══ BLOG ══ */
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+    .blog-card {
+      background: rgba(5,14,22,0.85); backdrop-filter: blur(12px);
+      border-radius: 24px; border: 1px solid rgba(0,255,247,0.2);
+      overflow: hidden; text-decoration: none; color: inherit;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .blog-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--cyan);
+      box-shadow: 0 0 25px rgba(0,255,247,0.25), 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .blog-card-banner {
+      height: 160px; background: linear-gradient(135deg, #050810, #0d1f2e);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative; overflow: hidden;
+      border-bottom: 1px solid rgba(0,255,247,0.1);
+    }
+    .blog-card-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0,255,247,0.08), transparent 70%);
+    }
+    .blog-card-body { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .blog-tag {
+      font-size: 0.62rem; letter-spacing: 1.5px;
+      padding: 3px 10px; border-radius: 20px; display: inline-block; width: fit-content;
+    }
+    .tag-red   { border:1px solid rgba(255,34,85,0.5); color:#ff8899; background:rgba(255,34,85,0.08); }
+    .tag-cyan  { border:1px solid rgba(0,255,247,0.4); color:#9ef0ed; background:rgba(0,255,247,0.06); }
+    .tag-green { border:1px solid rgba(0,255,65,0.4); color:#7fffaa; background:rgba(0,255,65,0.06); }
+    .tag-blue  { border:1px solid rgba(10,126,255,0.5); color:#6bb0ff; background:rgba(10,126,255,0.08); }
+    .blog-title { font-family:'Orbitron',monospace; font-size:0.95rem; color:#fff; line-height:1.4; }
+    .blog-excerpt { font-size:0.8rem; color:rgba(216,245,245,0.65); line-height:1.7; flex:1; }
+    .blog-meta { display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(0,255,247,0.1); padding-top:10px; font-size:0.68rem; color:rgba(0,255,247,0.45); }
+    .read-more { color:var(--cyan); font-size:0.72rem; letter-spacing:1px; transition:0.2s; cursor:pointer; background:none; border:none; font-family:'Share Tech Mono',monospace; }
+    .read-more:hover { text-shadow:0 0 8px var(--cyan); }
+
+    /* blog modal */
+    #blogModal {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.96); backdrop-filter: blur(14px);
+      display: none; overflow-y: auto;
+    }
+    #blogModal.open { display: block; animation: panelIn 0.4s ease; }
+    .blog-modal-inner {
+      max-width: 780px; margin: 3rem auto;
+      padding: 2rem; background: rgba(5,14,22,0.9);
+      border-radius: 28px; border: 1px solid rgba(0,255,247,0.25);
+      box-shadow: 0 0 50px rgba(0,255,247,0.1);
+      position: relative;
+    }
+    #blogModalClose {
+      position: sticky; top: 1rem; float: right;
+      background: rgba(255,34,85,0.1); border: 1px solid var(--red);
+      color: var(--red); font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem; padding: 6px 16px; border-radius: 20px;
+      cursor: pointer; transition: 0.2s; letter-spacing: 1px;
+    }
+    #blogModalClose:hover { background: rgba(255,34,85,0.25); }
+    #blogModalTitle { font-family:'Orbitron',monospace; font-size:1.5rem; color:var(--cyan); margin:1rem 0; line-height:1.3; text-shadow:0 0 15px rgba(0,255,247,0.3); }
+    #blogModalMeta { font-size:0.72rem; color:rgba(0,255,247,0.45); margin-bottom:1.5rem; letter-spacing:1px; }
+    #blogModalContent { font-size:0.88rem; line-height:1.9; color:#c5e8e8; }
+    #blogModalContent h3 { font-family:'Orbitron',monospace; color:var(--cyan); margin:1.5rem 0 0.5rem; font-size:1rem; }
+    #blogModalContent code { background:rgba(0,255,247,0.08); border:1px solid rgba(0,255,247,0.2); padding:2px 8px; border-radius:6px; color:var(--green); font-family:'Share Tech Mono',monospace; font-size:0.82rem; }
+    #blogModalContent pre { background:rgba(0,0,0,0.6); border:1px solid rgba(0,255,247,0.2); border-radius:12px; padding:1rem; overflow-x:auto; margin:1rem 0; }
+    #blogModalContent pre code { border:none; background:none; padding:0; }
+
+    /* ══ COMMENTS ══ */
+    .comments-section { max-width: 800px; margin: 0 auto; }
+
+    /* google script setup box */
+    .gs-setup-box {
+      background: rgba(10,126,255,0.06);
+      border: 1px solid rgba(10,126,255,0.35);
+      border-radius: 20px; padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .gs-setup-box h3 { font-family:'Orbitron',monospace; color:#6bb0ff; font-size:0.9rem; margin-bottom:1rem; display:flex; align-items:center; gap:10px; }
+    .gs-setup-box .gs-url-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .gs-url-input {
+      flex: 1; min-width: 200px;
+      background: rgba(0,20,40,0.6); border: 1px solid rgba(10,126,255,0.4);
+      padding: 10px 14px; border-radius: 30px; color: #d8f5f5;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.78rem;
+      outline: none; transition: 0.3s;
+    }
+    .gs-url-input:focus { border-color: #0a7eff; box-shadow: 0 0 12px rgba(10,126,255,0.3); }
+    .gs-save-btn {
+      padding: 10px 22px; border-radius: 30px;
+      border: 1px solid #0a7eff; background: rgba(10,126,255,0.12);
+      color: #6bb0ff; font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem; cursor: pointer; transition: 0.2s; white-space: nowrap;
+      letter-spacing: 1px;
+    }
+    .gs-save-btn:hover { background: rgba(10,126,255,0.25); box-shadow: 0 0 12px rgba(10,126,255,0.3); }
+    .gs-status { font-size:0.72rem; margin-top:8px; letter-spacing:1px; }
+    .gs-status.ok  { color: var(--green); } .gs-status.err { color: var(--red); }
+    .gs-tip { font-size:0.7rem; color:rgba(107,176,255,0.6); margin-top:8px; line-height:1.6; }
+    details.gs-script-box { margin-top:1rem; }
+    details.gs-script-box summary { cursor:pointer; color:#6bb0ff; font-size:0.78rem; letter-spacing:1px; user-select:none; }
+    details.gs-script-box pre {
+      margin-top:10px; background:rgba(0,0,0,0.7);
+      border:1px solid rgba(10,126,255,0.25); border-radius:12px;
+      padding:1rem; font-size:0.7rem; color:var(--green);
+      overflow-x: auto; white-space:pre; line-height:1.6;
+    }
+    .copy-btn {
+      margin-top: 8px; padding: 6px 16px; border-radius: 20px;
+      border: 1px solid rgba(0,255,65,0.4); background: rgba(0,255,65,0.06);
+      color: var(--green); font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; cursor: pointer; transition: 0.2s; letter-spacing: 1px;
+    }
+    .copy-btn:hover { background: rgba(0,255,65,0.15); box-shadow: 0 0 8px rgba(0,255,65,0.3); }
+
+    /* comment form */
+    .comment-form-box {
+      background: var(--glass); backdrop-filter: blur(12px);
+      border-radius: 24px; padding: 1.5rem;
+      border: 1px solid var(--border); margin-bottom: 2rem;
+    }
+    .comment-form-box h3 { font-family:'Orbitron',monospace; color:var(--cyan); font-size:0.9rem; margin-bottom:1rem; display:flex; align-items:center; gap:10px; }
+    .form-row { display:flex; gap:12px; flex-wrap:wrap; }
+    .input-box {
+      width:100%; background:rgba(0,30,40,0.6);
+      border:1px solid rgba(0,255,247,0.3);
+      padding:12px 16px; border-radius:30px;
+      color:#d8f5f5; font-family:'Share Tech Mono',monospace;
+      font-size:0.82rem; margin-bottom:12px;
+      transition:border-color 0.3s,box-shadow 0.3s; outline:none;
+    }
+    .input-box:focus { border-color:var(--cyan); box-shadow:0 0 12px rgba(0,255,247,0.25); }
+    .form-row .input-box { margin-bottom:0; flex:1; min-width:140px; }
+    .form-row-gap { margin-bottom:12px; }
+    textarea.input-box { border-radius:16px; resize:vertical; min-height:100px; }
+    .char-count { text-align:right; font-size:0.65rem; color:rgba(0,255,247,0.4); margin-bottom:10px; }
+    .submit-btn {
+      padding:12px 32px; border-radius:60px;
+      border:1px solid var(--cyan); background:rgba(0,255,247,0.08);
+      color:var(--cyan); font-family:'Share Tech Mono',monospace;
+      font-size:0.88rem; cursor:pointer; transition:0.25s; letter-spacing:1px;
+      position:relative; overflow:hidden;
+    }
+    .submit-btn:hover { box-shadow:0 0 20px var(--cyan),0 0 40px rgba(0,255,247,0.15); color:#fff; transform:translateY(-2px); }
+    .submit-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    #formStatus { margin-top:12px; font-size:0.8rem; letter-spacing:1px; min-height:1.2em; }
+
+    /* profanity warning */
+    .prof-warn { color:var(--red); font-size:0.72rem; margin-top:-8px; margin-bottom:8px; display:none; }
+    .prof-warn.visible { display:block; animation:panelIn 0.3s; }
+
+    /* comment list */
+    .comments-list { display:flex; flex-direction:column; gap:14px; }
+    .comment-card {
+      background: rgba(5,14,22,0.85); backdrop-filter:blur(8px);
+      border-radius: 18px; padding: 1.2rem;
+      border: 1px solid rgba(0,255,247,0.12);
+      transition: border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .comment-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--cyan); box-shadow:0 0 8px var(--cyan); }
+    .comment-card:hover { border-color:rgba(0,255,247,0.3); }
+    .comment-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px; }
+    .comment-name { font-family:'Orbitron',monospace; color:var(--cyan); font-size:0.82rem; }
+    .comment-time { font-size:0.65rem; color:rgba(0,255,247,0.4); letter-spacing:1px; }
+    .comment-text { font-size:0.82rem; color:#c5e8e8; line-height:1.7; word-break:break-word; }
+    .comment-likes { margin-top:10px; display:flex; align-items:center; gap:8px; }
+    .like-btn {
+      background:rgba(255,34,85,0.08); border:1px solid rgba(255,34,85,0.3);
+      color:#ff8899; font-family:'Share Tech Mono',monospace; font-size:0.7rem;
+      padding:3px 12px; border-radius:20px; cursor:pointer; transition:0.2s;
+    }
+    .like-btn:hover { background:rgba(255,34,85,0.2); box-shadow:0 0 8px rgba(255,34,85,0.3); }
+    .like-btn.liked { background:rgba(255,34,85,0.25); border-color:var(--red); color:var(--red); }
+    .no-comments { text-align:center; padding:3rem; color:rgba(0,255,247,0.3); font-size:0.85rem; letter-spacing:1px; }
+
+    /* loading spinner */
+    .loading-ring { display:inline-block; width:20px;height:20px; border:2px solid rgba(0,255,247,0.2); border-top:2px solid var(--cyan); border-radius:50%; animation:spin 0.8s linear infinite; vertical-align:middle; margin-right:8px; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+
+    /* toast */
+    #toast {
+      position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px);
+      background:rgba(5,14,22,0.95); border:1px solid var(--cyan);
+      color:var(--cyan); font-family:'Share Tech Mono',monospace; font-size:0.8rem;
+      padding:12px 24px; border-radius:30px; z-index:9999;
+      box-shadow:0 0 20px rgba(0,255,247,0.3);
+      transition:transform 0.4s cubic-bezier(0.2,0.9,0.4,1);
+      letter-spacing:1px;
+    }
+    #toast.show { transform:translateX(-50%) translateY(0); }
+    #toast.error { border-color:var(--red); color:var(--red); box-shadow:0 0 20px rgba(255,34,85,0.3); }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:#050810; }
+    ::-webkit-scrollbar-thumb { background:rgba(0,255,247,0.4); border-radius:3px; }
+
+    footer { text-align:center; padding:24px; color:rgba(0,255,247,0.4); font-size:0.78rem; border-top:1px solid rgba(0,255,247,0.08); position:relative; }
+    footer::before { content:''; display:block; width:200px;height:1px; background:linear-gradient(90deg,transparent,var(--cyan),transparent); margin:0 auto 12px; }
+
+    @media(hover:none){ #cursor-ring,#cursor-dot { display:none; } body { cursor:auto; } }
+    @media(max-width:600px){
+      .page-hero-title { font-size:1.6rem; }
+      .tab-btn { font-size:0.65rem; padding:10px 10px; letter-spacing:1px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+      .blog-grid { grid-template-columns:1fr; }
+      .blog-modal-inner { margin:1rem; padding:1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+<div class="grid-bg"></div>
+<div id="toast"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightboxClose" onclick="closeLightbox()">✕ CLOSE</button>
+  <img id="lightboxImg" src="" alt="" />
+  <div id="lightboxCaption"></div>
+</div>
+
+<!-- BLOG MODAL -->
+<div id="blogModal">
+  <div class="blog-modal-inner">
+    <button id="blogModalClose" onclick="closeBlogModal()">✕ CLOSE</button>
+    <div id="blogModalTag"></div>
+    <div id="blogModalTitle"></div>
+    <div id="blogModalMeta"></div>
+    <div id="blogModalContent"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>☠</span> CYBER DEMON</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="switchTab('gallery');return false;">Gallery</a></li>
+    <li><a href="#" onclick="switchTab('blog');return false;">Blog</a></li>
+    <li><a href="#" onclick="switchTab('comments');return false;">Comments</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-title">CYBER DEMON</div>
+  <div class="page-hero-sub">RED TEAM OPERATIONS · GALLERY · BLOG · OPEN CHAT</div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-gallery" onclick="switchTab('gallery')">
+      <i class="fas fa-images"></i> GALLERY
+    </button>
+    <button class="tab-btn" id="tab-blog" onclick="switchTab('blog')">
+      <i class="fas fa-terminal"></i> BLOG
+    </button>
+    <button class="tab-btn" id="tab-comments" onclick="switchTab('comments')">
+      <i class="fas fa-comments"></i> CHAT
+    </button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- ══════════ GALLERY PANEL ══════════ -->
+  <div class="tab-panel active" id="panel-gallery">
+    <div class="gallery-filter">
+      <button class="filter-btn active" onclick="filterGallery('all',this)">ALL</button>
+      <button class="filter-btn" onclick="filterGallery('ctf',this)">CTF</button>
+      <button class="filter-btn" onclick="filterGallery('tools',this)">TOOLS</button>
+      <button class="filter-btn" onclick="filterGallery('certs',this)">CERTS</button>
+      <button class="filter-btn" onclick="filterGallery('ops',this)">RED OPS</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- ══════════ BLOG PANEL ══════════ -->
+  <div class="tab-panel" id="panel-blog">
+    <div class="blog-grid" id="blogGrid"></div>
+  </div>
+
+  <!-- ══════════ COMMENTS PANEL ══════════ -->
+  <div class="tab-panel" id="panel-comments">
+    <div class="comments-section">
+
+      <!-- COMMENT FORM -->
+      <div class="comment-form-box">
+        <h3><i class="fas fa-terminal"></i> DROP YOUR COMMENT</h3>
+        <div class="form-row form-row-gap">
+          <input type="text" id="commentName" class="input-box" placeholder="Your Name / Handle" maxlength="40" />
+          <input type="text" id="commentHandle" class="input-box" placeholder="Tag (optional, e.g. @demon)" maxlength="30" style="flex:0.6" />
+        </div>
+        <textarea id="commentText" class="input-box" placeholder="Leave your message, question, or war cry here..." maxlength="500" oninput="updateCharCount()"></textarea>
+        <div class="char-count"><span id="charCount">0</span>/500</div>
+        <div class="prof-warn" id="profWarn">⚠ Comment contains flagged language. Please rephrase.</div>
+        <button class="submit-btn" id="submitBtn" onclick="submitComment()">
+          <i class="fas fa-paper-plane"></i> &nbsp;SEND MESSAGE
+        </button>
+        <div id="formStatus"></div>
+      </div>
+
+      <!-- COMMENTS LIST -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+        <div style="font-family:'Orbitron',monospace;color:var(--cyan);font-size:0.85rem;">
+          <i class="fas fa-comments"></i> LIVE CHAT &nbsp;<span id="commentCount" style="color:rgba(0,255,247,0.5);font-size:0.72rem;"></span>
+        </div>
+        <button onclick="loadComments()" style="background:rgba(0,255,247,0.06);border:1px solid rgba(0,255,247,0.3);color:rgba(0,255,247,0.7);font-family:'Share Tech Mono',monospace;font-size:0.72rem;padding:6px 14px;border-radius:20px;cursor:pointer;letter-spacing:1px;transition:0.2s;" onmouseover="this.style.boxShadow='0 0 10px rgba(0,255,247,0.3)'" onmouseout="this.style.boxShadow='none'">
+          <i class="fas fa-sync-alt"></i> REFRESH
+        </button>
+      </div>
+      <div class="comments-list" id="commentsList">
+        <div class="no-comments"><i class="fas fa-satellite-dish" style="font-size:2rem;display:block;margin-bottom:1rem;"></i>Waiting for signals...</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© <span id="year"></span> Balaji G — Demon Warrior &nbsp;·&nbsp; Built with ⚡ &amp; neon.</footer>
+
+<script>
+// ════════════════════════════════════════════════
+// CONFIG
+// ════════════════════════════════════════════════
+let GS_URL = localStorage.getItem("dw_gs_url") || "";
+
+// ── ADMIN PANEL (hidden from visitors) ────────
+function openAdmin() {
+  document.getElementById('adminModal').style.display = 'block';
+  document.getElementById('gsUrlInput').value = GS_URL;
+  document.body.style.overflow = 'hidden';
+}
+function closeAdmin() {
+  document.getElementById('adminModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+// Secret shortcut: Ctrl + Shift + A
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); openAdmin(); }
+  if (e.key === 'Escape') closeAdmin();
+});
+
+// ── PROFANITY FILTER ──────────────────────────
+const BANNED = [
+  'porn','fuck','pussy','shit','cunt','bitch','asshole','dick','cock','whore',
+  'slut','nigger','nigga','faggot','fag','retard','bastard','motherfuck',
+  'ass','damn','piss','crap','sex','nude','naked','boob','tit','anal','rape',
+  'jerk','idiot','moron','stupid'
+];
+const profanityRe = new RegExp('\\b(' + BANNED.join('|') + ')\\b', 'gi');
+
+function containsProfanity(str) {
+  return profanityRe.test(str);
+}
+function cleanText(str) {
+  profanityRe.lastIndex = 0;
+  return str.replace(profanityRe, m => '*'.repeat(m.length));
+}
+
+// ── CURSOR ────────────────────────────────────
+const ring = document.getElementById('cursor-ring');
+const dot  = document.getElementById('cursor-dot');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('pointermove', e => {
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+(function animC(){
+  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animC);
+})();
+
+// ── TABS ─────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+  if (name === 'comments') loadComments();
+}
+
+// ── TOAST ─────────────────────────────────────
+function showToast(msg, isError=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = isError ? 'error' : '';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── YEAR ──────────────────────────────────────
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ════════════════════════════════════════════════
+// GALLERY DATA (with real images gal1.png ... gal12.png)
+// ════════════════════════════════════════════════
+const galleryData = [
+  { id:1, cat:'ctf',   color:'#ff2255', title:'CTF Champion',       sub:'YukthiCTF 2024',       hex:'#1a0008', img:'gal1.png' },
+  { id:2, cat:'tools', color:'#00fff7', title:'RAT Builder',        sub:'Custom C2 Framework',  hex:'#001a1a', img:'gal2.png' },
+  { id:3, cat:'certs', color:'#ffcc00', title:'THM Certificate',    sub:'Offensive PenTest',    hex:'#1a1400', img:'gal3.png' },
+  { id:4, cat:'ops',   color:'#ff6600', title:'Red Op: Phoenix',    sub:'Internal Network',    hex:'#1a0800', img:'gal4.png' },
+  { id:5, cat:'ctf',   color:'#00ff41', title:'CTF — Web Exploit',  sub:'SQL Injection Chain',  hex:'#001a00', img:'gal5.png' },
+  { id:6, cat:'tools', color:'#0a7eff', title:'Payload Generator',  sub:'AV Bypass Engine',     hex:'#00081a', img:'gal6.png' },
+  { id:7, cat:'certs', color:'#e91e63', title:'Red Team Expert',    sub:'Certified 2024',       hex:'#1a0010', img:'gal7.png' },
+  { id:8, cat:'ops',   color:'#9b59b6', title:'OSINT Sweep',        sub:'48-hour Operation',    hex:'#0a001a', img:'gal8.png' },
+  { id:9, cat:'ctf',   color:'#ff2255', title:'Smart India Hack',   sub:'Top-10 Nationwide',    hex:'#1a0008', img:'gal9.png' },
+  { id:10,cat:'tools', color:'#00fff7', title:'Network Scanner',    sub:'Custom Nmap Wrapper',  hex:'#001a1a', img:'gal10.png' },
+  { id:11,cat:'ops',   color:'#ffcc00', title:'Social Engineering', sub:'Phishing Campaign',    hex:'#1a1400', img:'gal11.png' },
+  { id:12,cat:'certs', color:'#00ff41', title:'THM — Beginner Path',sub:'Complete',             hex:'#001a00', img:'gal12.png' }
+];
+
+function renderGallery(filter='all') {
+  const grid = document.getElementById('galleryGrid');
+  const items = filter === 'all' ? galleryData : galleryData.filter(g => g.cat === filter);
+  grid.innerHTML = items.map(g => `
+    <div class="gallery-item" data-cat="${g.cat}" onclick="openLightbox('${g.title}','${g.sub}','${g.img}')">
+      <img src="${g.img}" alt="${g.title}" loading="lazy" />
+      <div class="gallery-overlay">
+        <div class="gallery-title">${g.title}</div>
+        <span class="gallery-cat" style="border:1px solid ${g.color};color:${g.color};background:${g.color}18;">${g.sub}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterGallery(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGallery(cat);
+}
+
+function openLightbox(title, sub, imgSrc) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const caption = document.getElementById('lightboxCaption');
+  lightboxImg.src = imgSrc;
+  caption.textContent = `${title} — ${sub}`;
+  lightbox.classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+renderGallery();
+
+// ════════════════════════════════════════════════
+// BLOG DATA
+// ════════════════════════════════════════════════
+const blogData = [
+  {
+    id: 1, tag: 'tag-red', tagLabel: 'RED TEAM', icon: '💀',
+    title: 'How I Bypassed Windows Defender with a Custom Polymorphic Payload',
+    excerpt: 'A deep dive into AV evasion techniques — shellcode obfuscation, process injection, and how modern EDRs detect behavior, not just signatures.',
+    date: '14 MAY 2025', readTime: '8 min read',
+    content: `
+      <h3>Overview</h3>
+      <p>Modern antivirus solutions have moved far beyond simple signature scanning. Behavior-based detection, kernel callbacks, and cloud-based telemetry make traditional payloads obsolete in days. Here's how I built a payload that survived 0/72 detections on VirusTotal for two weeks.</p>
+      <h3>Technique 1 — Polymorphic Encoding</h3>
+      <p>The core shellcode is XOR-encrypted at build time with a randomly generated key. On execution, a stub decrypts and runs it. Since the encrypted blob changes every build, static signatures fail immediately.</p>
+      <pre><code>key = os.urandom(16)
+cipher = bytes([b ^ key[i % len(key)] for i, b in enumerate(shellcode)])</code></pre>
+      <h3>Technique 2 — Process Injection via NT APIs</h3>
+      <p>Instead of using <code>VirtualAllocEx</code> + <code>WriteProcessMemory</code> (flagged heavily), I used low-level NT syscalls — <code>NtAllocateVirtualMemory</code> and <code>NtWriteVirtualMemory</code> — accessed via direct syscall stubs, completely bypassing Win32 API hooks placed by EDRs.</p>
+      <h3>Result</h3>
+      <p>Combined with a signed binary dropper and AMSI patching, the payload ran in a target Cobalt Strike lab undetected for the duration of the exercise. Full PoC available in my GitHub.</p>
+    `
+  },
+  {
+    id: 2, tag: 'tag-cyan', tagLabel: 'OSINT', icon: '🔍',
+    title: 'Building an Automated OSINT Pipeline in Python',
+    excerpt: 'From a single email address to a complete target profile — automating Shodan, HaveIBeenPwned, LinkedIn scraping, and WHOIS in one tool.',
+    date: '02 APR 2025', readTime: '6 min read',
+    content: `
+      <h3>Why Automate OSINT?</h3>
+      <p>Manual reconnaissance is slow and inconsistent. Building a pipeline that runs in parallel and correlates data from multiple sources can reduce a 4-hour manual recon to under 10 minutes.</p>
+      <h3>The Stack</h3>
+      <p>Python 3.12 + <code>asyncio</code> for concurrent requests, <code>aiohttp</code> for async HTTP, Shodan API for exposed services, HIBP API for breach data, and custom scrapers for public social profiles.</p>
+      <h3>Pipeline Stages</h3>
+      <p>Stage 1 resolves the target email to associated accounts. Stage 2 runs Shodan queries on any discovered IP ranges. Stage 3 cross-references breach databases. Stage 4 generates a structured HTML report with a risk score.</p>
+      <h3>Ethics Note</h3>
+      <p>Always run OSINT tools only on targets you have explicit written permission to investigate, or on yourself. This pipeline is built for authorized red-team engagements only.</p>
+    `
+  },
+  {
+    id: 3, tag: 'tag-green', tagLabel: 'MALWARE', icon: '🧬',
+    title: 'Reverse Engineering a RAT: From Packed Binary to C2 Protocol',
+    excerpt: 'Step-by-step reverse engineering of a commodity RAT — unpacking, deobfuscation, protocol reconstruction, and building a YARA rule to catch it.',
+    date: '18 MAR 2025', readTime: '12 min read',
+    content: `
+      <h3>Initial Triage</h3>
+      <p>The sample arrived as a UPX-packed PE32 binary. Running <code>upx -d</code> unpacked it cleanly. DIE (Detect-It-Easy) showed no additional protections beyond basic string obfuscation via XOR with a single-byte key.</p>
+      <h3>Static Analysis</h3>
+      <p>Strings revealed hardcoded C2 domains (now sinkholed), mutex names, and registry persistence keys under <code>HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code>.</p>
+      <h3>Dynamic Analysis</h3>
+      <p>Running in FlareVM with INetSim intercepting DNS, I captured the C2 beacon — a custom binary protocol over TCP 4444, with a 4-byte magic header, command byte, and XOR-encrypted payload body.</p>
+      <h3>YARA Rule</h3>
+      <pre><code>rule DemonRAT_v1 {
+  strings:
+    $magic = { DE AD BE EF }
+    $mutex = "DW_MUTEX_2024" wide
+    $xor   = { 35 ?? 90 90 }
+  condition:
+    all of them
+}</code></pre>
+    `
+  },
+  {
+    id: 4, tag: 'tag-blue', tagLabel: 'DEVSECOPS', icon: '🐳',
+    title: 'Securing a Docker Pipeline: SAST, DAST, and Supply Chain',
+    excerpt: 'How I hardened a CI/CD pipeline with Trivy, Semgrep, OWASP ZAP, and signed container images using Cosign — zero CVEs in production.',
+    date: '01 FEB 2025', readTime: '7 min read',
+    content: `
+      <h3>The Problem</h3>
+      <p>A client's Docker pipeline was pulling unverified base images, had no dependency scanning, and deployed to Kubernetes with containers running as root. Classic setup for a supply chain attack.</p>
+      <h3>Stage 1 — Image Scanning with Trivy</h3>
+      <p>Integrated <code>trivy image --exit-code 1 --severity HIGH,CRITICAL</code> into the CI pipeline. This blocked 3 high-severity images in the first week.</p>
+      <h3>Stage 2 — SAST with Semgrep</h3>
+      <p>Added Semgrep with the <code>python.django.security</code> and <code>javascript.express.security</code> rulesets. Caught 4 SQL injection patterns in legacy code that had survived 2 years of reviews.</p>
+      <h3>Stage 3 — DAST with OWASP ZAP</h3>
+      <p>Deployed ZAP in passive scan mode against a staging environment on every PR. Automated alerts integrated with Slack via webhook.</p>
+      <h3>Result</h3>
+      <p>Zero critical CVEs in production for 90 days post-implementation. Mean time to detect dropped from 14 days to under 2 hours.</p>
+    `
+  },
+  {
+    id: 5, tag: 'tag-red', tagLabel: 'CTF WRITEUP', icon: '⚑',
+    title: 'CTF Writeup: YukthiCTF 2024 — Web Category Full Clear',
+    excerpt: 'Complete walkthrough of all 6 web challenges at YukthiCTF 2024 — SSRF, SQLi, JWT forgery, SSTI, XXE, and a custom deserialization bug.',
+    date: '10 JAN 2025', readTime: '15 min read',
+    content: `
+      <h3>Challenge 1 — Blind SQLi</h3>
+      <p>Classic blind boolean-based injection on a login parameter. Automated with sqlmap but also solved manually to understand the schema: <code>admin' AND SLEEP(5)-- -</code>.</p>
+      <h3>Challenge 2 — JWT None Algorithm</h3>
+      <p>The app accepted JWTs with <code>alg: none</code> — change the algorithm, strip the signature, forge admin claims. Classic misconfiguration.</p>
+      <h3>Challenge 3 — SSTI in Jinja2</h3>
+      <p>A report template field was rendering unsanitized user input. Payload: <code>{{config.__class__.__init__.__globals__['os'].popen('id').read()}}</code> returned RCE immediately.</p>
+      <h3>Flag</h3>
+      <pre><code>flag{y0uth_ctf_w3b_m4st3r_2024}</code></pre>
+    `
+  },
+  {
+    id: 6, tag: 'tag-cyan', tagLabel: 'PURPLE TEAM', icon: '🟣',
+    title: 'Purple Team Exercise: Testing Your Detection Before the Red Team Does',
+    excerpt: 'How I run internal purple team exercises — simulating TTPs from MITRE ATT&CK and measuring SIEM detection coverage before real engagements.',
+    date: '05 DEC 2024', readTime: '9 min read',
+    content: `
+      <h3>What is Purple Teaming?</h3>
+      <p>Purple teaming combines red team attack simulation with blue team monitoring in real time. Instead of waiting for the red team debrief, defenders watch the attack live and tune their detections immediately.</p>
+      <h3>Setup</h3>
+      <p>I run Atomic Red Team for TTP simulation, Elastic SIEM for detection, and a custom scoring sheet mapped to MITRE ATT&CK techniques. Each technique gets a detection score: 0 (blind), 1 (alert), 2 (auto-block).</p>
+      <h3>Common Gaps Found</h3>
+      <p>Lateral movement via WMI is missed in 80% of environments. LSASS memory reads trigger in under 20% of cases without specific Sysmon config. Pass-the-hash is consistently undetected without network-level monitoring.</p>
+      <h3>Outcome</h3>
+      <p>Average detection coverage improves from 34% to 71% after one 2-day purple team session. The ROI is enormous compared to waiting for an annual red team assessment.</p>
+    `
+  },
+];
+
+function renderBlog() {
+  const grid = document.getElementById('blogGrid');
+  grid.innerHTML = blogData.map(post => `
+    <div class="blog-card" onclick="openBlogModal(${post.id})">
+      <div class="blog-card-banner" style="font-size:4rem">${post.icon}</div>
+      <div class="blog-card-body">
+        <span class="blog-tag ${post.tag}">${post.tagLabel}</span>
+        <div class="blog-title">${post.title}</div>
+        <div class="blog-excerpt">${post.excerpt}</div>
+        <div class="blog-meta">
+          <span>${post.date}</span>
+          <span>${post.readTime}</span>
+        </div>
+        <button class="read-more">READ MORE →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openBlogModal(id) {
+  const post = blogData.find(p => p.id === id);
+  if (!post) return;
+  document.getElementById('blogModalTag').innerHTML = `<span class="blog-tag ${post.tag}" style="display:inline-block;margin-bottom:0.5rem">${post.tagLabel}</span>`;
+  document.getElementById('blogModalTitle').textContent = post.title;
+  document.getElementById('blogModalMeta').textContent = post.date + '  ·  ' + post.readTime;
+  document.getElementById('blogModalContent').innerHTML = post.content;
+  document.getElementById('blogModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeBlogModal() {
+  document.getElementById('blogModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+renderBlog();
+
+// ════════════════════════════════════════════════
+// COMMENT SYSTEM (same as before)
+// ════════════════════════════════════════════════
+
+function getLocalComments() {
+  try { return JSON.parse(localStorage.getItem('dw_comments') || '[]'); } catch { return []; }
+}
+function saveLocalComment(c) {
+  const list = getLocalComments();
+  list.unshift(c);
+  localStorage.setItem('dw_comments', JSON.stringify(list.slice(0, 200)));
+}
+
+function updateCharCount() {
+  const txt = document.getElementById('commentText').value;
+  document.getElementById('charCount').textContent = txt.length;
+  const warn = document.getElementById('profWarn');
+  if (containsProfanity(txt)) {
+    warn.classList.add('visible');
+  } else {
+    warn.classList.remove('visible');
+  }
+}
+
+async function submitComment() {
+  const nameEl = document.getElementById('commentName');
+  const textEl = document.getElementById('commentText');
+  const handleEl = document.getElementById('commentHandle');
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+
+  const name = nameEl.value.trim();
+  const handle = handleEl.value.trim();
+  const text = textEl.value.trim();
+
+  if (!name) { showToast('⚠ Please enter your name.', true); nameEl.focus(); return; }
+  if (!text)  { showToast('⚠ Comment cannot be empty.', true); textEl.focus(); return; }
+  if (text.length < 3) { showToast('⚠ Comment too short.', true); return; }
+
+  if (containsProfanity(name + ' ' + text)) {
+    document.getElementById('profWarn').classList.add('visible');
+    showToast('⚠ Flagged language detected. Please rephrase.', true);
+    return;
+  }
+
+  const displayName = handle ? `${name} (${handle})` : name;
+  btn.disabled = true;
+  status.innerHTML = '<span class="loading-ring"></span> Sending...';
+
+  const commentObj = {
+    id: Date.now().toString(),
+    name: displayName,
+    comment: text,
+    timestamp: new Date().toISOString(),
+    likes: 0
+  };
+
+  let saved = false;
+
+  if (GS_URL) {
+    try {
+      await fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: displayName, comment: text })
+      });
+      saved = true;
+    } catch (e) {
+      console.warn('GS POST failed, falling back to local:', e);
+    }
+  }
+
+  saveLocalComment(commentObj);
+
+  status.innerHTML = '';
+  btn.disabled = false;
+  nameEl.value = '';
+  textEl.value = '';
+  handleEl.value = '';
+  document.getElementById('charCount').textContent = '0';
+  document.getElementById('profWarn').classList.remove('visible');
+
+  showToast(saved ? '✅ Comment saved to database!' : '✅ Comment posted locally!');
+  loadComments();
+}
+
+async function loadComments() {
+  const list = document.getElementById('commentsList');
+  list.innerHTML = '<div class="no-comments"><span class="loading-ring"></span> Loading comments...</div>';
+
+  let comments = [];
+
+  if (GS_URL) {
+    try {
+      const res = await fetch(GS_URL + '?action=get', { method: 'GET' });
+      const data = await res.json();
+      if (data.comments) comments = data.comments;
+    } catch (e) {
+      console.warn('GAS fetch failed, using local:', e);
+    }
+  }
+
+  const local = getLocalComments();
+  const allIds = new Set(comments.map(c => c.id));
+  local.forEach(c => { if (!allIds.has(c.id)) comments.push(c); });
+
+  comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+  document.getElementById('commentCount').textContent = `(${comments.length})`;
+
+  if (!comments.length) {
+    list.innerHTML = `<div class="no-comments"><i class="fas fa-satellite-dish" style="font-size:2rem;display:block;margin-bottom:1rem;"></i>No messages yet — be the first to transmit.</div>`;
+    return;
+  }
+
+  const likedSet = new Set(JSON.parse(localStorage.getItem('dw_liked') || '[]'));
+
+  list.innerHTML = comments.map(c => {
+    const liked = likedSet.has(c.id);
+    const dt = new Date(c.timestamp);
+    const timeStr = isNaN(dt) ? c.timestamp : dt.toLocaleString();
+    return `
+      <div class="comment-card" id="cc-${c.id}">
+        <div class="comment-header">
+          <div class="comment-name"><i class="fas fa-user-secret" style="margin-right:6px;font-size:0.7rem;"></i>${escapeHtml(c.name)}</div>
+          <div class="comment-time">${timeStr}</div>
+        </div>
+        <div class="comment-text">${escapeHtml(c.comment)}</div>
+        <div class="comment-likes">
+          <button class="like-btn ${liked ? 'liked' : ''}" onclick="likeComment('${c.id}',this)">
+            <i class="fas fa-heart"></i> ${liked ? 'LIKED' : 'LIKE'} &nbsp;<span class="lc">${c.likes || 0}</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function likeComment(id, btn) {
+  const liked = JSON.parse(localStorage.getItem('dw_liked') || '[]');
+  if (liked.includes(id)) { showToast('Already liked!'); return; }
+  liked.push(id);
+  localStorage.setItem('dw_liked', JSON.stringify(liked));
+  btn.classList.add('liked');
+  btn.querySelector('i').style.color = 'var(--red)';
+  const lc = btn.querySelector('.lc');
+  lc.textContent = parseInt(lc.textContent) + 1;
+  btn.innerHTML = `<i class="fas fa-heart" style="color:var(--red)"></i> LIKED &nbsp;<span class="lc">${lc.textContent}</span>`;
+  showToast('❤ Liked!');
+  const local = getLocalComments();
+  const idx = local.findIndex(c => c.id === id);
+  if (idx !== -1) { local[idx].likes = (local[idx].likes || 0) + 1; localStorage.setItem('dw_comments', JSON.stringify(local)); }
+}
+
+function escapeHtml(t) {
+  return (t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function saveGsUrl() {
+  const url = document.getElementById('gsUrlInput').value.trim();
+  const status = document.getElementById('gsStatus');
+  if (!url || !url.startsWith('https://script.google.com')) {
+    status.textContent = '✗ Invalid URL — must start with https://script.google.com';
+    status.className = 'gs-status err';
+    return;
+  }
+  GS_URL = url;
+  localStorage.setItem('dw_gs_url', GS_URL);
+  status.textContent = '✓ URL saved! Comments will now sync to your Google Sheet.';
+  status.className = 'gs-status ok';
+  showToast('✅ Google Script URL saved!');
+}
+
+async function testGsUrl() {
+  const url = document.getElementById('gsUrlInput').value.trim();
+  const status = document.getElementById('gsStatus');
+  if (!url) { showToast('Enter a URL first', true); return; }
+  status.textContent = 'Testing connection...';
+  status.className = 'gs-status';
+  try {
+    const res = await fetch(url + '?action=test');
+    if (res.ok) {
+      status.textContent = '✓ Connection successful! Script is reachable.';
+      status.className = 'gs-status ok';
+    } else {
+      status.textContent = '✗ Script returned error ' + res.status;
+      status.className = 'gs-status err';
+    }
+  } catch (e) {
+    status.textContent = '⚠ CORS blocked (expected) — try saving and posting a comment.';
+    status.className = 'gs-status ok';
+  }
+}
+
+function copyGasCode() {
+  const code = document.getElementById('gasCode').textContent;
+  navigator.clipboard.writeText(code).then(() => showToast('✅ Script copied to clipboard!')).catch(() => showToast('Copy failed — select manually', true));
+}
+</script>
+</body>
+</html>
