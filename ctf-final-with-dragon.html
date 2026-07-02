@@ -93,7 +93,7 @@
     </div>
 
     <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px;">
-      Place your badge image as <code>badge.png</code> or <code>badge.jpg</code>, and your dragon watermark as <code>dragon.png</code> in the same folder as this HTML file.
+      Place your badge image as <code>badge2.png</code> or <code>badge.jpg</code>, and your dragon watermark as <code>dragon.png</code> in the same folder as this HTML file.
     </p>
   </div>
 
@@ -104,8 +104,8 @@ const SQLI_USERNAME = "admin";
 const SQLI_PASSWORD = "' or 1=1; --";
 const ROOT_PASSWORD = "DevilsDemon";
 const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL"; // replace to enable notifications
-const BADGE_PNG = "badge1.png";
-const BADGE_JPG = "badge.jpg";
+const BADGE_PNG = "badge2.png";
+const BADGE_JPG = "badge2.jpg";
 const DRAGON_PNG = "dragon.png"; // user-uploaded dragon watermark
 
 /* ============== STATE & DOM =========== */
@@ -312,7 +312,7 @@ async function generateCertificate(name) {
   // neon border
   ctx.save(); ctx.lineWidth = 8; ctx.strokeStyle = "#00fff7"; roundRectPath(ctx, 24,24, W-48, H-48, 14); ctx.stroke(); ctx.restore();
 
-  // draw badge at top center (badge.png then badge.jpg)
+  // draw badge at top center (badge2.png then badge.jpg)
   const badge = await loadImage(BADGE_PNG).catch(()=>null) || await loadImage(BADGE_JPG).catch(()=>null);
   const badgeW = 160, badgeH = 160; const bx = (W-badgeW)/2, by = 36;
   ctx.save();
