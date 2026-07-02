@@ -104,7 +104,7 @@ const FLAG_MD5 = "5c3885e8ae8ecc87db1feeb9864524de";
 const SQLI_USERNAME = "admin";
 const SQLI_PASSWORD = "' or 1=1; --";
 const ROOT_PASSWORD = "DevilsDemon";
-const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL"; // replace to enable notifications
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1447538298355716187/vsRL7lrbmIpKyzY8DeXxVHVdrDQoxOLpCFbP_zY9WFObhNf1tcyXduunp_uEa5qOmWCU"; // replace to enable notifications
 const BADGE_PNG = "badge1.png";
 const BADGE_JPG = "badge.jpg";
 const DRAGON_PNG = "dragon.png"; // user-uploaded dragon watermark
@@ -547,7 +547,7 @@ downloadPDF.addEventListener("click", async ()=> {
 
 /* ============== Discord notification =========== */
 async function sendDiscordNotification(name){
-  if (!DISCORD_WEBHOOK || DISCORD_WEBHOOK === "YOUR_DISCORD_WEBHOOK_URL") {
+  if (!DISCORD_WEBHOOK || DISCORD_WEBHOOK === "your dis") {
     print("[!] Discord webhook not set; no notification sent.", "muted");
     return;
   }
