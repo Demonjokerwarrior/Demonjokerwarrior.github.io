@@ -6,12 +6,13 @@
   <title>Demon Warrior — CTF with Dragon Watermark</title>
 
   <!-- Fonts & jsPDF -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root{
       --bg:#030306; --neon:#00fff7; --muted:#7fdfe7; --accent:#ff00c8; --panel:rgba(0,0,0,0.64);
+      --gold:#ffd166;
     }
     html,body{height:100%;margin:0;background:linear-gradient(180deg,#000 0%, #050507 85%);color:var(--neon);font-family:'Share Tech Mono',monospace}
     .wrap{max-width:1100px;margin:28px auto;padding:22px}
@@ -69,7 +70,7 @@
 
       <div id="certWrap">
         <h3 class="muted">Certificate of Completion</h3>
-        <canvas id="certCanvas" width="1000" height="620"></canvas>
+        <canvas id="certCanvas" width="1600" height="1000"></canvas>
         <div class="cert-buttons">
           <a id="downloadPNG" class="btn" download="demon_ctf_certificate.png">Download PNG</a>
           <button id="downloadPDF" class="btn">Download PDF</button>
@@ -93,7 +94,7 @@
     </div>
 
     <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px;">
-      Place your badge image as <code>badge2.png</code> or <code>badge.jpg</code>, and your dragon watermark as <code>dragon.png</code> in the same folder as this HTML file.
+      Place your badge image as <code>badge.png</code> or <code>badge.jpg</code>, and your dragon watermark as <code>dragon.png</code> in the same folder as this HTML file.
     </p>
   </div>
 
@@ -104,8 +105,8 @@ const SQLI_USERNAME = "admin";
 const SQLI_PASSWORD = "' or 1=1; --";
 const ROOT_PASSWORD = "DevilsDemon";
 const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL"; // replace to enable notifications
-const BADGE_PNG = "badge2.png";
-const BADGE_JPG = "badge2.jpg";
+const BADGE_PNG = "badge1.png";
+const BADGE_JPG = "badge.jpg";
 const DRAGON_PNG = "dragon.png"; // user-uploaded dragon watermark
 
 /* ============== STATE & DOM =========== */
@@ -283,59 +284,235 @@ function askForNameAndGenerate() {
 /* fallback embedded dragon SVG (in case dragon.png not provided) */
 const dragonSVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='#ffffff' d='M320 32c-48 0-88 26-112 64-6 10-18 14-29 9-15-6-31-10-48-10-35 0-64 19-80 48-10 18-12 38-3 60 4 9 2 19-6 25-13 10-27 22-40 34-10 9-11 25-2 35 9 10 25 11 35 2 12-11 23-22 34-34 6-6 15-8 23-5 20 9 41 15 62 20 13 3 27 7 40 11 14 4 29 3 42-4 16-8 28-22 36-38 9-19 21-36 36-50 22-20 50-34 80-40 24-5 48-12 72-14 47-3 86 20 112 56 10 14 27 23 45 23 32 1 58 27 58 59 0 10-4 20-11 28-10 11-20 22-29 33-12 15-25 30-40 44-9 8-9 22 1 30 60 50 97 112 97 200 0 35-6 70-19 102-7 17-24 27-42 25-18-2-31-16-34-34-2-11 0-21 6-31 12-20 20-42 20-65 0-63-32-116-83-156-35-26-76-44-118-58-22-7-44-13-66-18-9-2-18-9-20-19-5-30-25-56-53-69-47-21-96-32-147-32z'/></svg>`;
 
+/* ============== certificate design tokens ============== */
+const CERT_COLORS = {
+  bgTop: "#07070a", bgBottom: "#0c0c10",
+  cyan: "#00fff7", cyanDim: "rgba(0,255,247,0.35)",
+  magenta: "#ff00c8", gold: "#ffd166", goldDim: "rgba(255,209,102,0.5)",
+  muted: "#8fb9bd", white: "#eafffe"
+};
+
+function generateCertId(name){
+  const seed = (name + "|" + FLAG_MD5).split("").reduce((a,c)=> (a*31 + c.charCodeAt(0)) >>> 0, 7);
+  const hex = seed.toString(16).toUpperCase().padStart(8,"0");
+  return "DW-" + hex.slice(0,4) + "-" + hex.slice(4,8);
+}
+
 /* draw certificate */
 async function generateCertificate(name) {
   certWrap.style.display = "block";
   const canvas = document.getElementById("certCanvas");
   const ctx = canvas.getContext("2d");
-  const W = canvas.width, H = canvas.height;
+  const W = canvas.width, H = canvas.height; // 1600 x 1000
   ctx.clearRect(0,0,W,H);
 
-  // background gradient
-  const grad = ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0,"#050506"); grad.addColorStop(1,"#0b0b0c");
-  ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+  /* ---- 1. background: vignette + scanlines ---- */
+  const bgGrad = ctx.createLinearGradient(0,0,0,H);
+  bgGrad.addColorStop(0, CERT_COLORS.bgTop); bgGrad.addColorStop(1, CERT_COLORS.bgBottom);
+  ctx.fillStyle = bgGrad; ctx.fillRect(0,0,W,H);
 
-  // try to load dragon.png first
+  const vignette = ctx.createRadialGradient(W/2,H*0.42,H*0.15, W/2,H*0.42,H*0.85);
+  vignette.addColorStop(0,"rgba(0,255,247,0.05)"); vignette.addColorStop(1,"rgba(0,0,0,0.55)");
+  ctx.fillStyle = vignette; ctx.fillRect(0,0,W,H);
+
+  ctx.save(); ctx.globalAlpha = 0.035; ctx.strokeStyle = "#00fff7"; ctx.lineWidth = 1;
+  for (let y = 0; y < H; y += 4) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  ctx.restore();
+
+  /* ---- 2. dragon watermark, centered low-opacity ---- */
   const dragonImg = await loadImage(DRAGON_PNG).catch(()=>null);
-  if (dragonImg) {
-    ctx.save(); ctx.globalAlpha = 0.08;
-    const dw = W*0.9, dh = H*0.9; ctx.drawImage(dragonImg, (W-dw)/2, (H-dh)/2 - 20, dw, dh); ctx.restore();
-  } else {
-    // fallback to embedded SVG watermark
+  const dragonSrc = dragonImg || await (async () => {
     const svgImg = new Image();
     svgImg.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(dragonSVG);
     await new Promise(res => { svgImg.onload = res; svgImg.onerror = res; });
-    ctx.save(); ctx.globalAlpha = 0.06; const dw = W*0.9, dh = H*0.9; ctx.drawImage(svgImg, (W-dw)/2, (H-dh)/2 - 20, dw, dh); ctx.restore();
-  }
+    return svgImg;
+  })();
+  ctx.save(); ctx.globalAlpha = 0.07;
+  drawImageCover(ctx, dragonSrc, 0, 0, W, H);
+  ctx.restore();
 
-  // neon border
-  ctx.save(); ctx.lineWidth = 8; ctx.strokeStyle = "#00fff7"; roundRectPath(ctx, 24,24, W-48, H-48, 14); ctx.stroke(); ctx.restore();
-
-  // draw badge at top center (badge2.png then badge.jpg)
-  const badge = await loadImage(BADGE_PNG).catch(()=>null) || await loadImage(BADGE_JPG).catch(()=>null);
-  const badgeW = 160, badgeH = 160; const bx = (W-badgeW)/2, by = 36;
+  /* ---- 3. outer frame: double border + circuit-trace corners ---- */
   ctx.save();
-  ctx.beginPath(); ctx.arc(bx + badgeW/2, by + badgeH/2, badgeW/2 + 8, 0, Math.PI*2); ctx.fillStyle = "rgba(0,255,247,0.04)"; ctx.fill(); ctx.restore();
-  if (badge) ctx.drawImage(badge, bx, by, badgeW, badgeH); else { ctx.fillStyle="#00fff7"; ctx.font="20px Orbitron"; ctx.fillText("BADGE", bx+28, by + badgeH/2 + 8); }
+  ctx.lineWidth = 2; ctx.strokeStyle = "rgba(255,0,200,0.55)";
+  roundRectPath(ctx, 34, 34, W-68, H-68, 6); ctx.stroke();
+  ctx.lineWidth = 3; ctx.strokeStyle = CERT_COLORS.cyan;
+  ctx.shadowColor = CERT_COLORS.cyan; ctx.shadowBlur = 14;
+  roundRectPath(ctx, 46, 46, W-92, H-92, 4); ctx.stroke();
+  ctx.restore();
 
-  // main text
-  ctx.font = "36px Orbitron"; ctx.fillStyle = "#00fff7"; ctx.fillText("CERTIFICATE OF COMPLETION", 120, by + badgeH + 70);
-  ctx.font = "20px Orbitron"; ctx.fillStyle = "#bfffe6"; ctx.fillText("This certifies that", 120, by + badgeH + 110);
-  ctx.font = "48px Orbitron"; ctx.fillStyle = "#00ffb0"; ctx.fillText(name, 120, by + badgeH + 170);
-  ctx.font = "20px Orbitron"; ctx.fillStyle = "#b7ffff"; ctx.fillText("has successfully completed the Demon Warrior Mini CTF", 120, by + badgeH + 220);
-  ctx.font = "18px Orbitron"; ctx.fillStyle = "#b0ffff"; ctx.fillText("Flag (MD5): " + FLAG_MD5, 120, by + badgeH + 260);
+  drawCircuitCorner(ctx, 46, 46, 1, 1);
+  drawCircuitCorner(ctx, W-46, 46, -1, 1);
+  drawCircuitCorner(ctx, 46, H-46, 1, -1);
+  drawCircuitCorner(ctx, W-46, H-46, -1, -1);
 
-  // Completed Steps box (right side)
- 
+  /* ---- 4. eyebrow ribbon ---- */
+  ctx.save();
+  ctx.font = "600 20px 'Share Tech Mono', monospace";
+  ctx.fillStyle = CERT_COLORS.magenta; ctx.textAlign = "center";
+  ctx.fillText("〈  DEMON WARRIOR // CYBER CHALLENGE  〉", W/2, 108);
+  ctx.restore();
 
-  // date & signature
+  /* ---- 5. hexagonal badge frame ---- */
+  const badge = await loadImage(BADGE_PNG).catch(()=>null) || await loadImage(BADGE_JPG).catch(()=>null);
+  const hexCX = W/2, hexCY = 205, hexR = 92;
+  ctx.save();
+  ctx.shadowColor = CERT_COLORS.gold; ctx.shadowBlur = 22;
+  drawHexPath(ctx, hexCX, hexCY, hexR + 10);
+  ctx.strokeStyle = CERT_COLORS.gold; ctx.lineWidth = 3; ctx.stroke();
+  ctx.restore();
+  drawHexPath(ctx, hexCX, hexCY, hexR);
+  ctx.save(); ctx.clip();
+  if (badge) {
+    ctx.drawImage(badge, hexCX-hexR, hexCY-hexR, hexR*2, hexR*2);
+  } else {
+    ctx.fillStyle = "#0b0b10"; ctx.fillRect(hexCX-hexR, hexCY-hexR, hexR*2, hexR*2);
+    ctx.fillStyle = CERT_COLORS.cyan; ctx.textAlign = "center"; ctx.font = "700 22px Orbitron";
+    ctx.fillText("DW", hexCX, hexCY+8);
+  }
+  ctx.restore();
+  ctx.save(); ctx.strokeStyle = "rgba(0,255,247,0.6)"; ctx.lineWidth = 1.5;
+  drawHexPath(ctx, hexCX, hexCY, hexR); ctx.stroke(); ctx.restore();
+
+  /* ---- 6. title block ---- */
+  ctx.textAlign = "center";
+  ctx.save();
+  ctx.font = "900 46px Orbitron"; ctx.fillStyle = CERT_COLORS.gold;
+  ctx.shadowColor = "rgba(255,209,102,0.5)"; ctx.shadowBlur = 10;
+  ctx.fillText("CERTIFICATE OF ACHIEVEMENT", W/2, 355);
+  ctx.restore();
+
+  ctx.font = "18px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.muted;
+  ctx.fillText("this certifies that", W/2, 400);
+
+  ctx.font = "700 52px Orbitron"; ctx.fillStyle = CERT_COLORS.white;
+  ctx.shadowColor = CERT_COLORS.cyan; ctx.shadowBlur = 16;
+  ctx.fillText(name, W/2, 465);
+  ctx.shadowBlur = 0;
+
+  // underline rule beneath name
+  const nameWidth = Math.min(ctx.measureText(name).width + 80, 640);
+  ctx.save(); ctx.strokeStyle = CERT_COLORS.cyanDim; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(W/2 - nameWidth/2, 485); ctx.lineTo(W/2 + nameWidth/2, 485); ctx.stroke();
+  ctx.restore();
+
+  ctx.font = "20px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.muted;
+  wrapText(ctx, "has breached the Demon Warrior system, escalated privileges to root, and decrypted the final flag.", W/2, 525, 820, 30);
+
+  /* ---- 7. ornamental divider ---- */
+  drawDivider(ctx, W/2, 585, 360);
+
+  /* ---- 8. two-column footer info: mission log + flag chip ---- */
+  const colY = 630;
+  ctx.textAlign = "left";
+  ctx.font = "700 15px Orbitron"; ctx.fillStyle = CERT_COLORS.magenta;
+  ctx.fillText("MISSION LOG", W/2 - 380, colY);
+  ctx.font = "16px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.muted;
+  const missionSteps = ["✓ SQL injection — login.sh", "✓ Privilege escalation — su root", "✓ Root-level decrypt executed"];
+  missionSteps.forEach((line,i)=> ctx.fillText(line, W/2 - 380, colY + 34 + i*30));
+
+  ctx.textAlign = "right";
+  ctx.font = "700 15px Orbitron"; ctx.fillStyle = CERT_COLORS.magenta;
+  ctx.fillText("FLAG VERIFIED (MD5)", W/2 + 380, colY);
+  ctx.save();
+  roundRectPath(ctx, W/2 + 380 - 358, colY + 16, 358, 40, 6);
+  ctx.strokeStyle = "rgba(0,255,247,0.4)"; ctx.lineWidth = 1; ctx.stroke();
+  ctx.font = "16px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.cyan;
+  ctx.fillText(FLAG_MD5, W/2 + 380 - 16, colY + 42);
+  ctx.restore();
+
+  /* ---- 9. bottom row: date / seal / signature ---- */
   const d = new Date();
-  ctx.font = "18px Orbitron"; ctx.fillStyle = "#b0ffff"; ctx.fillText("Date: " + d.toLocaleDateString(), 120, by + badgeH + 320);
-  ctx.font = "22px Orbitron"; ctx.fillStyle = "#ffffff"; ctx.fillText("~ Demon Warrior", 120, by + badgeH + 370);
+  const footY = H - 118;
+  ctx.textAlign = "left";
+  ctx.strokeStyle = "rgba(255,255,255,0.25)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, footY); ctx.lineTo(380, footY); ctx.stroke();
+  ctx.font = "20px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.white;
+  ctx.fillText(d.toLocaleDateString(), 140, footY - 12);
+  ctx.font = "12px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.muted;
+  ctx.fillText("DATE ISSUED", 140, footY + 22);
+
+  ctx.textAlign = "right";
+  ctx.beginPath(); ctx.moveTo(W-140, footY); ctx.lineTo(W-380, footY); ctx.stroke();
+  ctx.font = "26px Orbitron"; ctx.fillStyle = CERT_COLORS.white;
+  ctx.fillText("Demon Warrior", W-140, footY - 12);
+  ctx.font = "12px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.muted;
+  ctx.fillText("AUTHORIZED BY", W-140, footY + 22);
+
+  const certId = generateCertId(name);
+  drawSealStamp(ctx, W/2, footY - 30, 46);
+  ctx.textAlign = "center"; ctx.font = "13px 'Share Tech Mono', monospace"; ctx.fillStyle = CERT_COLORS.muted;
+  ctx.fillText("CERT ID: " + certId, W/2, footY + 48);
 
   // set PNG download
   downloadPNG.href = canvas.toDataURL("image/png");
+}
+
+/* ---- drawing helpers ---- */
+function wrapText(ctx, text, cx, y, maxWidth, lineHeight){
+  const words = text.split(" ");
+  let line = "", lines = [];
+  for (const w of words){
+    const test = line ? line + " " + w : w;
+    if (ctx.measureText(test).width > maxWidth && line){ lines.push(line); line = w; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  ctx.textAlign = "center";
+  lines.forEach((l,i)=> ctx.fillText(l, cx, y + i*lineHeight));
+}
+
+function drawHexPath(ctx, cx, cy, r){
+  ctx.beginPath();
+  for (let i=0;i<6;i++){
+    const a = Math.PI/180 * (60*i - 90);
+    const px = cx + r*Math.cos(a), py = cy + r*Math.sin(a);
+    if (i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.closePath();
+}
+
+function drawCircuitCorner(ctx, x, y, dirX, dirY){
+  const s = 64;
+  ctx.save();
+  ctx.strokeStyle = CERT_COLORS.cyanDim; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x, y + s*dirY);
+  ctx.lineTo(x, y + 18*dirY);
+  ctx.lineTo(x + 18*dirX, y);
+  ctx.lineTo(x + s*dirX, y);
+  ctx.stroke();
+  ctx.fillStyle = CERT_COLORS.cyan;
+  [ [x, y+18*dirY], [x+18*dirX, y], [x+s*dirX, y], [x, y+s*dirY] ].forEach(p=>{
+    ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, Math.PI*2); ctx.fill();
+  });
+  ctx.restore();
+}
+
+function drawDivider(ctx, cx, y, width){
+  ctx.save();
+  ctx.strokeStyle = "rgba(255,209,102,0.4)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(cx-width/2, y); ctx.lineTo(cx-14, y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx+14, y); ctx.lineTo(cx+width/2, y); ctx.stroke();
+  ctx.save(); ctx.translate(cx,y); ctx.rotate(Math.PI/4);
+  ctx.fillStyle = CERT_COLORS.gold; ctx.fillRect(-6,-6,12,12);
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawSealStamp(ctx, cx, cy, r){
+  ctx.save();
+  ctx.strokeStyle = CERT_COLORS.gold; ctx.lineWidth = 2;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(cx,cy,r-8,0,Math.PI*2); ctx.strokeStyle = "rgba(255,209,102,0.5)"; ctx.stroke();
+  ctx.fillStyle = CERT_COLORS.gold; ctx.lineWidth = 3; ctx.strokeStyle = CERT_COLORS.gold;
+  ctx.beginPath();
+  ctx.moveTo(cx-16, cy);
+  ctx.lineTo(cx-4, cy+13);
+  ctx.lineTo(cx+18, cy-14);
+  ctx.stroke();
+  ctx.restore();
 }
 
 /* helper to attempt load image, returns Promise that rejects on error */
@@ -346,6 +523,15 @@ function loadImage(src) {
     img.onerror = () => reject(new Error("Image load failed: " + src));
     img.src = src;
   });
+}
+/* draws img to fill target w/h fully (cropping overflow), like CSS background-size:cover */
+function drawImageCover(ctx, img, x, y, w, h){
+  const iw = img.naturalWidth || img.width || 1;
+  const ih = img.naturalHeight || img.height || 1;
+  const scale = Math.max(w/iw, h/ih);
+  const sw = w/scale, sh = h/scale;
+  const sx = (iw - sw)/2, sy = (ih - sh)/2;
+  ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
 }
 function roundRectPath(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
 
